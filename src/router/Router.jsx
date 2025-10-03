@@ -31,7 +31,7 @@ const Router = () => {
     <Routes>
       <Route path='/' element={<App />}>
         <Route index element={<Home />} />
-        
+
         {/* Rutas de Actividades */}
         <Route path='activities'>
           <Route path='create' element={<CreateActivity />} />
