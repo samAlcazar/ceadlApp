@@ -1,12 +1,13 @@
 import { Outlet } from 'react-router-dom'
+import Nav from '../components/Nav'
 
-const Home = () => {
+const App = () => {
   return (
     <>
-      <div>Home</div>
+      <Nav />
       <Outlet />
     </>
   )
 }
 
-export default Home
+export default App
