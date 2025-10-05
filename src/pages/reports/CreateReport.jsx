@@ -1,4 +1,7 @@
+import Authorized from '../../hooks/Authorized'
+
 const CreateReport = () => {
+  const user = Authorized()
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -10,8 +13,8 @@ const CreateReport = () => {
       anexos: e.target.anexos.value,
       approved: e.target.approved.checked,
       idProject: e.target.idProject.value,
-      idActivity: e.target.idActivity.value
-      // idUser vendrá del estado global
+      idActivity: e.target.idActivity.value,
+      idUser: user.idUser
     }
 
     console.log(body)
