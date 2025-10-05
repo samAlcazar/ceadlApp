@@ -65,7 +65,7 @@ const Router = () => {
           <Route path='update/:idAccountability' element={<UpdateAccountability />} />
         </Route>
 
-        {/* Rutas de Postulaciones */}
+        {/* Rutas de Solicitudes */}
         <Route path='applications'>
           <Route path='create' element={<CreateApplication />} />
           <Route path='update/:idApplication' element={<UpdateApplication />} />

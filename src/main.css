@@ -1,5 +1,30 @@
 @import "tailwindcss";
 
-input {
+input, select, textarea, button, option {
   all: unset;
+}
+
+select {
+  appearance: none;
+}
+select::picker(select) {
+  appearance: none;
+}
+
+select {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+select option {
+  background-color: tomato;
+  color: #333;
+  padding: 5px;
+}
+
+select option:hover {
+  background-color: #007bff;
+  color: #fff;
 }
