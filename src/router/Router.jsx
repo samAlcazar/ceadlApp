@@ -64,7 +64,7 @@ const Router = () => {
           <Route path='update/:idReport' element={<UpdateReport />} />
         </Route>
         <Route path='quantitative'>
-          <Route path='create/:idReport' element={<CreateQuantitative />} />
+          <Route path='create/:idActivity' element={<CreateQuantitative />} />
         </Route>
 
         {/* Rutas de Rendiciones */}
@@ -72,8 +72,8 @@ const Router = () => {
           <Route path='create' element={<CreateAccountability />} />
           <Route path='update/:idAccountability' element={<UpdateAccountability />} />
         </Route>
-        <Route path='surrender'>
-          <Route path='create' element={<CreateSurrender />} />
+        <Route path='surrenders'>
+          <Route path='create/:idAccountability' element={<CreateSurrender />} />
         </Route>
 
         {/* Rutas de Solicitudes */}
@@ -82,7 +82,7 @@ const Router = () => {
           <Route path='update/:idApplication' element={<UpdateApplication />} />
         </Route>
         <Route path='budgets'>
-          <Route path='create' element={<CreateBudget />} />
+          <Route path='create/:idApplication' element={<CreateBudget />} />
         </Route>
       </Route>
 

@@ -57,6 +57,7 @@ const CreateAccountability = () => {
         </label>
         <button type='submit'>Crear Rendición de Cuentas</button>
       </form>
+      <a href='/surrenders/create/asd'>Paso 2</a>
     </main>
   )
 }
