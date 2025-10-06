@@ -26,6 +26,8 @@ const HistoryProjects = () => {
                   <a href={`/projects/update/${project.id_project}`}>Editar</a>
                   {' | '}
                   <a href={`/projects/delete/${project.id_project}`}>Eliminar</a>
+                  {' | '}
+                  <a href={`/projects/${project.id_project}`}>Ver</a>
                 </td>
               </tr>
             ))

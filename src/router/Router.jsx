@@ -29,6 +29,7 @@ import HistoryProjects from '../pages/projects/HistoryProjects'
 import CreateQuantitative from '../pages/reports/CreateQuantitative'
 import CreateBudget from '../pages/applications/CreateBudget'
 import CreateSurrender from '../pages/accountability/CreateSurrender'
+import Project from '../pages/projects/Project'
 
 const Router = () => {
   return (
@@ -47,6 +48,7 @@ const Router = () => {
           <Route path='create' element={<CreateProject />} />
           <Route path='update/:idProject' element={<UpdateProject />} />
           <Route path='history' element={<HistoryProjects />} />
+          <Route path=':idProject' element={<Project />} />
         </Route>
         <Route path='especifics'>
           <Route path='create/:idProject' element={<CreateEspecifics />} />
