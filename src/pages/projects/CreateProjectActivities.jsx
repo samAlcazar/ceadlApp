@@ -1,16 +1,56 @@
+import { useState, useEffect } from 'react'
+import Authorized from '../../hooks/Authorized'
+import { useParams } from 'react-router-dom'
+import { URL } from '../../../utils/url'
+
 const CreateProjectActivities = () => {
+  const user = Authorized()
+  const { idProject } = useParams()
+  const [allProjectActivities, setAllProjectActivities] = useState([])
+  const [projectActivities, setProjectActivities] = useState([])
+
+  // useEffect para ver cuando cambia el estado
+  useEffect(() => {
+    console.log('Actividades actualizadas:', projectActivities)
+  }, [projectActivities])
+
+  const pushProjectActivity = (e) => {
+    e.preventDefault()
+
+    // Acceder al formulario desde el botón
+    const form = e.target.closest('form')
+    const body = {
+      numProjectActivity: parseInt(form.numProjectActivity.value),
+      projectActivity: form.projectActivity.value,
+      category: form.category.value,
+      idProject,
+      idUser: user.idUser
+    }
+
+    setProjectActivities([...projectActivities, body])
+
+    // Limpiar el formulario después de agregar
+    form.reset()
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    const body = {
-      numProjectActivity: parseInt(e.target.numProjectActivity.value),
-      projectActivity: e.target.projectActivity.value,
-      category: e.target.category.value,
-      idProject: e.target.idProject.value
-      // idUser vendrá del estado global
-    }
-
-    console.log(body)
+    fetch(`${URL}projectActivities/bulk`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(projectActivities)
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Actividades subidas con éxito:', data)
+        setAllProjectActivities(data)
+      })
+      .catch((error) => {
+        console.error('Error al subir las actividades:', error)
+      })
   }
 
   return (
@@ -29,18 +69,34 @@ const CreateProjectActivities = () => {
           Rubro:
           <input type='text' name='category' required />
         </label>
-        <label>
-          Proyecto:
-          <select name='idProject' required>
-            <option value=''>Seleccionar proyecto</option>
-            <option value='f2ef50b0-5da7-40f4-a371-bde8653459a5'>Proyecto 1</option>
-            <option value='project2'>Proyecto 2</option>
-            <option value='project3'>Proyecto 3</option>
-          </select>
-        </label>
-        <button type='submit'>Agregar</button>
+        <button onClick={pushProjectActivity}>Agregar</button>
       </form>
       <a href='/'>Finalizar</a>
+      <section>
+        <h2>Actividades agregadas</h2>
+        {
+          projectActivities.map((activity, index) => (
+            <div key={index}>
+              <p>Número: {activity.numProjectActivity}</p>
+              <p>Actividad: {activity.projectActivity}</p>
+              <p>Rubro: {activity.category}</p>
+            </div>
+          ))
+        }
+      </section>
+      <button onClick={handleSubmit}>Subir</button>
+      <section>
+        <h2>Actividades subidas</h2>
+        {
+          allProjectActivities.map((activity, index) => (
+            <div key={index}>
+              <p>Número: {activity.num_project_activity}</p>
+              <p>Actividad: {activity.project_activity}</p>
+              <p>Rubro: {activity.category}</p>
+            </div>
+          ))
+        }
+      </section>
     </main>
   )
 }

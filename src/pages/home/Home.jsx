@@ -8,7 +8,7 @@ const Home = () => {
         <Card
           title='Proyectos'
           linkOne='projects/create'
-          linkTwo=''
+          linkTwo='projects/history'
           aOne='Crear proyecto'
           aTwo='Historial de proyectos'
         />

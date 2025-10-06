@@ -22,7 +22,7 @@ const CreateReport = () => {
 
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-400'>
-      <h1>Crear Reporte</h1>
+      <h1>Crear Informe</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <label>
           Problemas encontrados:
@@ -66,8 +66,12 @@ const CreateReport = () => {
             <option value='activity3'>Actividad 3</option>
           </select>
         </label>
-        <button type='submit'>Crear Reporte</button>
+        <button type='submit'>Crear Informe</button>
       </form>
+      <a href='/quantitative/create/asd'>Paso 2</a>
+      <section>
+        <h2>Informe creado</h2>
+      </section>
     </main>
   )
 }

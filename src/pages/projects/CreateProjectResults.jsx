@@ -1,15 +1,55 @@
+import { useState, useEffect } from 'react'
+import Authorized from '../../hooks/Authorized'
+import { useParams } from 'react-router-dom'
+import { URL } from '../../../utils/url'
+
 const CreateProjectResults = () => {
+  const user = Authorized()
+  const { idProject } = useParams()
+  const [allProjectResults, setAllProjectResults] = useState([])
+  const [projectResults, setProjectResults] = useState([])
+
+  // useEffect para ver cuando cambia el estado
+  useEffect(() => {
+    console.log('Resultados actualizados:', projectResults)
+  }, [projectResults])
+
+  const pushProjectResult = (e) => {
+    e.preventDefault()
+
+    // Acceder al formulario desde el botón
+    const form = e.target.closest('form')
+    const body = {
+      numProjectResult: parseInt(form.numProjectResult.value),
+      projectResult: form.projectResult.value,
+      idProject,
+      idUser: user.idUser
+    }
+
+    setProjectResults([...projectResults, body])
+
+    // Limpiar el formulario después de agregar
+    form.reset()
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    const body = {
-      numProjectResult: parseInt(e.target.numProjectResult.value),
-      projectResult: e.target.projectResult.value,
-      idProject: e.target.idProject.value
-      // idUser vendrá del estado global
-    }
-
-    console.log(body)
+    fetch(`${URL}projectResults/bulk`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(projectResults)
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Resultados subidos con éxito:', data)
+        setAllProjectResults(data)
+      })
+      .catch((error) => {
+        console.error('Error al subir los resultados:', error)
+      })
   }
 
   return (
@@ -24,18 +64,32 @@ const CreateProjectResults = () => {
           Resultado esperado:
           <input type='text' name='projectResult' required />
         </label>
-        <label>
-          Proyecto:
-          <select name='idProject' required>
-            <option value=''>Seleccionar proyecto</option>
-            <option value='f2ef50b0-5da7-40f4-a371-bde8653459a5'>Proyecto 1</option>
-            <option value='project2'>Proyecto 2</option>
-            <option value='project3'>Proyecto 3</option>
-          </select>
-        </label>
-        <button type='submit'>Agregar</button>
+        <button onClick={pushProjectResult}>Agregar</button>
       </form>
-      <a href='/projectActivities/create/asd'>Continúa en el paso 4</a>
+      <a href={`/projectActivities/create/${idProject}`}>Continúa en el paso 4</a>
+      <section>
+        <h2>Resultados agregados</h2>
+        {
+          projectResults.map((result, index) => (
+            <div key={index}>
+              <p>Número: {result.numProjectResult}</p>
+              <p>Resultado: {result.projectResult}</p>
+            </div>
+          ))
+        }
+      </section>
+      <button onClick={handleSubmit}>Subir</button>
+      <section>
+        <h2>Resultados subidos</h2>
+        {
+          allProjectResults.map((result, index) => (
+            <div key={index}>
+              <p>Número: {result.num_project_result}</p>
+              <p>Resultado: {result.project_result}</p>
+            </div>
+          ))
+        }
+      </section>
     </main>
   )
 }

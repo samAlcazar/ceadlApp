@@ -15,7 +15,7 @@ const CreateApplication = () => {
 
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-400'>
-      <h1>Crear Postulación</h1>
+      <h1>Crear Solicitud</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <label>
           Monto (USD):
@@ -50,8 +50,9 @@ const CreateApplication = () => {
             <option value='activity3'>Actividad 3</option>
           </select>
         </label>
-        <button type='submit'>Crear Postulación</button>
+        <button type='submit'>Crear Solicitud</button>
       </form>
+      <a href='/budgets/create'>Paso 2</a>
     </main>
   )
 }

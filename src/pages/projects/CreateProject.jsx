@@ -1,4 +1,13 @@
+import { useState } from 'react'
+import Authorized from '../../hooks/Authorized'
+import { URL } from '../../../utils/url'
+import Data from '../../hooks/Data'
+
 const CreateProject = () => {
+  const user = Authorized()
+  const [project, setProject] = useState({})
+  const founders = Data('founders')
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -6,12 +15,32 @@ const CreateProject = () => {
       codProject: e.target.codProject.value,
       nameProject: e.target.nameProject.value,
       objetiveProject: e.target.objetiveProject.value,
-      idFounder: e.target.idFounder.value
-      // idUser vendrá del estado global
+      idFounder: e.target.idFounder.value,
+      idUser: user.idUser
     }
 
-    console.log(body)
+    fetch(`${URL}projects`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error al crear el proyecto')
+        }
+        return response.json()
+      })
+      .then((data) => {
+        setProject(data)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
+
+  const param = project && project.create_project ? project.create_project.id_project : 'asd'
 
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-400'>
@@ -33,14 +62,19 @@ const CreateProject = () => {
           Financiador:
           <select name='idFounder' required>
             <option value=''>Seleccionar financiador</option>
-            <option value='5a3b5272-084d-4f95-a9d1-5e516ef82bb7'>Financiador 1</option>
-            <option value='founder2'>Financiador 2</option>
-            <option value='founder3'>Financiador 3</option>
+            {founders.data && founders.data.map((founder) => (
+              <option key={founder.id_founder} value={founder.id_founder}>
+                {founder.name_founder}
+              </option>
+            ))}
           </select>
         </label>
         <button type='submit'>Crear proyecto</button>
       </form>
-      <a href='/especifics/create/asd'>Continúa en el paso 2</a>
+      <a href={`/especifics/create/${param}`}>Continúa en el paso 2</a>
+      <section>
+        {JSON.stringify(project)}
+      </section>
     </main>
   )
 }

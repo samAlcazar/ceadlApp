@@ -1,15 +1,57 @@
+import { useState, useEffect } from 'react'
+import Authorized from '../../hooks/Authorized'
+import { useParams } from 'react-router-dom'
+import { URL } from '../../../utils/url'
+
 const CreateEspecifics = () => {
+  const user = Authorized()
+  const { idProject } = useParams()
+  const [allEspecifics, setAllEspecifics] = useState([])
+  const [especifics, setEspecifics] = useState([])
+
+  // useEffect para ver cuando cambia el estado
+  useEffect(() => {
+    console.log('Específicos actualizados:', especifics)
+  }, [especifics])
+
+  const pushEspecific = (e) => {
+    e.preventDefault()
+
+    // Acceder al formulario desde el botón
+    const form = e.target.closest('form')
+    const body = {
+      numEspecific: parseInt(form.numEspecific.value),
+      especific: form.especific.value,
+      idProject,
+      idUser: user.idUser
+    }
+
+    setEspecifics([...especifics, body])
+
+    // Limpiar el formulario después de agregar
+    form.reset()
+
+    // Ya no necesitamos console.log aquí
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    const body = {
-      numEspecific: parseInt(e.target.numEspecific.value),
-      especific: e.target.especific.value,
-      idProject: e.target.idProject.value
-      // idUser vendrá del estado global
-    }
-
-    console.log(body)
+    fetch(`${URL}especifics/bulk`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(especifics)
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Específicos subidos con éxito:', data)
+        setAllEspecifics(data)
+      })
+      .catch((error) => {
+        console.error('Error al subir los específicos:', error)
+      })
   }
 
   return (
@@ -24,18 +66,32 @@ const CreateEspecifics = () => {
           Objetivo específico:
           <input type='text' name='especific' required />
         </label>
-        <label>
-          Proyecto:
-          <select name='idProject' required>
-            <option value=''>Seleccionar proyecto</option>
-            <option value='f2ef50b0-5da7-40f4-a371-bde8653459a5'>Proyecto 1</option>
-            <option value='project2'>Proyecto 2</option>
-            <option value='project3'>Proyecto 3</option>
-          </select>
-        </label>
-        <button type='submit'>Agregar</button>
+        <button onClick={pushEspecific}>Agregar</button>
       </form>
-      <a href='/projectResults/create/asd'>Continúa en el paso 3</a>
+      <a href={`/projectResults/create/${idProject}`}>Continúa en el paso 3</a>
+      <section>
+        <h2>Específicos agregados</h2>
+        {
+          especifics.map((especific, index) => (
+            <div key={index}>
+              <p>Número: {especific.numEspecific}</p>
+              <p>Objetivo: {especific.especific}</p>
+            </div>
+          ))
+        }
+      </section>
+      <button onClick={handleSubmit}>Subir</button>
+      <section>
+        <h2>Específicos subidos</h2>
+        {
+          allEspecifics.map((especific, index) => (
+            <div key={index}>
+              <p>Número: {especific.num_especific}</p>
+              <p>Objetivo: {especific.especific}</p>
+            </div>
+          ))
+        }
+      </section>
     </main>
   )
 }

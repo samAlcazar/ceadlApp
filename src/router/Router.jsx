@@ -25,6 +25,10 @@ import UpdateAccountability from '../pages/accountability/UpdateAccountability'
 // Postulaciones
 import CreateApplication from '../pages/applications/CreateApplication'
 import UpdateApplication from '../pages/applications/UpdateApplication'
+import HistoryProjects from '../pages/projects/HistoryProjects'
+import CreateQuantitative from '../pages/reports/CreateQuantitative'
+import CreateBudget from '../pages/applications/CreateBudget'
+import CreateSurrender from '../pages/accountability/CreateSurrender'
 
 const Router = () => {
   return (
@@ -42,6 +46,7 @@ const Router = () => {
         <Route path='projects'>
           <Route path='create' element={<CreateProject />} />
           <Route path='update/:idProject' element={<UpdateProject />} />
+          <Route path='history' element={<HistoryProjects />} />
         </Route>
         <Route path='especifics'>
           <Route path='create/:idProject' element={<CreateEspecifics />} />
@@ -58,17 +63,26 @@ const Router = () => {
           <Route path='create' element={<CreateReport />} />
           <Route path='update/:idReport' element={<UpdateReport />} />
         </Route>
+        <Route path='quantitative'>
+          <Route path='create/:idReport' element={<CreateQuantitative />} />
+        </Route>
 
         {/* Rutas de Rendiciones */}
         <Route path='accountability'>
           <Route path='create' element={<CreateAccountability />} />
           <Route path='update/:idAccountability' element={<UpdateAccountability />} />
         </Route>
+        <Route path='surrender'>
+          <Route path='create' element={<CreateSurrender />} />
+        </Route>
 
         {/* Rutas de Solicitudes */}
         <Route path='applications'>
           <Route path='create' element={<CreateApplication />} />
           <Route path='update/:idApplication' element={<UpdateApplication />} />
+        </Route>
+        <Route path='budgets'>
+          <Route path='create' element={<CreateBudget />} />
         </Route>
       </Route>
 
