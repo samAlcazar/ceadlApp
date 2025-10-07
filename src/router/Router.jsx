@@ -8,15 +8,15 @@ import CreateActivity from '../pages/activity/CreateActivity'
 import UpdateActivity from '../pages/activity/UpdateActivity'
 
 // Proyectos
-import CreateProject from '../pages/projects/CreateProject'
-import UpdateProject from '../pages/projects/UpdateProject'
-import CreateEspecifics from '../pages/projects/CreateEspecifics'
+import CreateProject from '../pages/projects/create/CreateProject'
+import UpdateProject from '../pages/projects/update/UpdateProject'
+import CreateEspecifics from '../pages/projects/create/CreateEspecifics'
 
 // Reportes
 import CreateReport from '../pages/reports/CreateReport'
 import UpdateReport from '../pages/reports/UpdateReport'
-import CreateProjectResults from '../pages/projects/CreateProjectResults'
-import CreateProjectActivities from '../pages/projects/CreateProjectActivities'
+import CreateProjectResults from '../pages/projects/create/CreateProjectResults'
+import CreateProjectActivities from '../pages/projects/create/CreateProjectActivities'
 
 // Rendiciones
 import CreateAccountability from '../pages/accountability/CreateAccountability'
@@ -30,6 +30,7 @@ import CreateQuantitative from '../pages/reports/CreateQuantitative'
 import CreateBudget from '../pages/applications/CreateBudget'
 import CreateSurrender from '../pages/accountability/CreateSurrender'
 import Project from '../pages/projects/Project'
+import UpdateEspecifics from '../pages/projects/update/UpdateEspecifics'
 
 const Router = () => {
   return (
@@ -52,6 +53,7 @@ const Router = () => {
         </Route>
         <Route path='especifics'>
           <Route path='create/:idProject' element={<CreateEspecifics />} />
+          <Route path='update/:idProject' element={<UpdateEspecifics />} />
         </Route>
         <Route path='projectResults'>
           <Route path='create/:idProject' element={<CreateProjectResults />} />

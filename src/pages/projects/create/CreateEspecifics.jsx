@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import Authorized from '../../hooks/Authorized'
+import Authorized from '../../../hooks/Authorized'
 import { useParams } from 'react-router-dom'
-import { URL } from '../../../utils/url'
+import { URL } from '../../../../utils/url'
 
 const CreateEspecifics = () => {
   const user = Authorized()

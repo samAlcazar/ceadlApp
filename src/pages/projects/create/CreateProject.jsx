@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import Authorized from '../../hooks/Authorized'
-import { URL } from '../../../utils/url'
-import Data from '../../hooks/Data'
+import Authorized from '../../../hooks/Authorized'
+import { URL } from '../../../../utils/url'
+import Data from '../../../hooks/Data'
 
 const CreateProject = () => {
   const user = Authorized()
@@ -43,7 +43,7 @@ const CreateProject = () => {
   const param = project && project.create_project ? project.create_project.id_project : 'asd'
 
   return (
-    <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-400'>
+    <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
       <h1>Crear proyecto</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <label>
