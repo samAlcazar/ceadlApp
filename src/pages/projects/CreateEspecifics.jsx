@@ -25,13 +25,8 @@ const CreateEspecifics = () => {
       idProject,
       idUser: user.idUser
     }
-
     setEspecifics([...especifics, body])
-
-    // Limpiar el formulario después de agregar
     form.reset()
-
-    // Ya no necesitamos console.log aquí
   }
 
   const handleSubmit = (e) => {
@@ -54,8 +49,12 @@ const CreateEspecifics = () => {
       })
   }
 
+  const deleteEspecific = (index) => {
+    setEspecifics(especifics.filter((_, i) => i !== index))
+  }
+
   return (
-    <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-400'>
+    <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
       <h1>Crear objetivos específicos del proyecto</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <label>
@@ -76,6 +75,7 @@ const CreateEspecifics = () => {
             <div key={index}>
               <p>Número: {especific.numEspecific}</p>
               <p>Objetivo: {especific.especific}</p>
+              <button onClick={() => deleteEspecific(index)}>Eliminar</button>
             </div>
           ))
         }

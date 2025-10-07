@@ -26,10 +26,7 @@ const CreateProjectActivities = () => {
       idProject,
       idUser: user.idUser
     }
-
     setProjectActivities([...projectActivities, body])
-
-    // Limpiar el formulario después de agregar
     form.reset()
   }
 
@@ -53,8 +50,12 @@ const CreateProjectActivities = () => {
       })
   }
 
+  const deleteProjectActivity = (index) => {
+    setProjectActivities(projectActivities.filter((_, i) => i !== index))
+  }
+
   return (
-    <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-400'>
+    <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
       <h1>Crear actividades del proyecto</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <label>
@@ -80,6 +81,7 @@ const CreateProjectActivities = () => {
               <p>Número: {activity.numProjectActivity}</p>
               <p>Actividad: {activity.projectActivity}</p>
               <p>Rubro: {activity.category}</p>
+              <button onClick={() => deleteProjectActivity(index)}>Eliminar</button>
             </div>
           ))
         }

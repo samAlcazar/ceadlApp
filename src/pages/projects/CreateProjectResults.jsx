@@ -16,8 +16,6 @@ const CreateProjectResults = () => {
 
   const pushProjectResult = (e) => {
     e.preventDefault()
-
-    // Acceder al formulario desde el botón
     const form = e.target.closest('form')
     const body = {
       numProjectResult: parseInt(form.numProjectResult.value),
@@ -25,10 +23,7 @@ const CreateProjectResults = () => {
       idProject,
       idUser: user.idUser
     }
-
     setProjectResults([...projectResults, body])
-
-    // Limpiar el formulario después de agregar
     form.reset()
   }
 
@@ -52,10 +47,14 @@ const CreateProjectResults = () => {
       })
   }
 
+  const deleteProjectResult = (index) => {
+    setProjectResults(projectResults.filter((_, i) => i !== index))
+  }
+
   return (
-    <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-400'>
+    <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
       <h1>Crear resultados esperados del proyecto</h1>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+      <form className='flex flex-col gap-4'>
         <label>
           Número de resultado esperado:
           <input type='number' name='numProjectResult' min='1' max='5' required />
@@ -74,6 +73,7 @@ const CreateProjectResults = () => {
             <div key={index}>
               <p>Número: {result.numProjectResult}</p>
               <p>Resultado: {result.projectResult}</p>
+              <button onClick={() => deleteProjectResult(index)}>Eliminar</button>
             </div>
           ))
         }
