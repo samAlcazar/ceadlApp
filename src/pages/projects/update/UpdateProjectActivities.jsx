@@ -101,87 +101,91 @@ const UpdateProjectActivities = () => {
 
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
-      <h1>Actualizar Actividades del Proyecto</h1>
-      {/* Verificamos que los datos existan y tengan la estructura correcta */}
-      {projectActivities.data && projectActivities.data[0] && projectActivities.data[0].list_project_activities_by_project && (
-        <div className='w-full max-w-4xl grid grid-cols-3'>
-          {projectActivities.data[0].list_project_activities_by_project.map((activity) => (
-            <form onSubmit={handleSubmit} key={activity.id_project_activity} className='border p-4 m-2 rounded flex flex-col'>
-              <h3>Actividad #{activity.num_project_activity}</h3>
-              <label className='display-none'>
-                ID Actividad:
-                <input
-                  type='text'
-                  value={activity.id_project_activity}
-                  name='idProjectActivity'
-                  readOnly
-                />
-              </label>
-              <label>
-                Número de actividad:
-                <input
-                  type='number'
-                  name='numProjectActivity'
-                  defaultValue={activity.num_project_activity}
-                />
-              </label>
-              <label>
-                Descripción:
-                <input
-                  type='text'
-                  defaultValue={activity.project_activity}
-                  className='border p-2 rounded'
-                  name='description'
-                />
-              </label>
-              <label>
-                Rubro/Categoría:
-                <input
-                  type='text'
-                  defaultValue={activity.category}
-                  className='border p-2 rounded'
-                  name='category'
-                />
-              </label>
-              <button type='submit' className='text-white px-4 py-2 rounded mr-2'>
-                Actualizar
-              </button>
-              <button
-                type='button'
-                className='bg-red-500 text-white px-4 py-2 rounded'
-                onClick={() => handleDelete(activity.id_project_activity)}
-              >
-                Eliminar
-              </button>
-            </form>
-          ))}
-        </div>
-      )}
-      {(!projectActivities.data || !projectActivities.data[0] || !projectActivities.data[0].list_project_activities_by_project) && (
-        <div className='text-center'>
-          <h2>No hay actividades disponibles</h2>
-          <p>Este proyecto aún no tiene actividades creadas.</p>
-        </div>
-      )}
+      <section className='flex flex-col justify-center items-center w-[900px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700 overflow-y-auto'>
+        <h1 className='text-white text-2xl mb-8'>Actualizar Actividades del Proyecto</h1>
+        {/* Verificamos que los datos existan y tengan la estructura correcta */}
+        {projectActivities.data && projectActivities.data[0] && projectActivities.data[0].list_project_activities_by_project && (
+          <div className='w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 mb-6'>
+            {projectActivities.data[0].list_project_activities_by_project.map((activity) => (
+              <form onSubmit={handleSubmit} key={activity.id_project_activity} className='bg-cyan-800 p-4 rounded-lg flex flex-col gap-3'>
+                <h3 className='text-cyan-50 text-lg font-semibold'>Actividad #{activity.num_project_activity}</h3>
+                <label className='hidden'>
+                  <input
+                    type='text'
+                    value={activity.id_project_activity}
+                    name='idProjectActivity'
+                    readOnly
+                  />
+                </label>
+                <label className='grid text-cyan-50'>
+                  <p className='text-cyan-50'>Número de actividad:</p>
+                  <input
+                    type='number'
+                    name='numProjectActivity'
+                    defaultValue={activity.num_project_activity}
+                    className='px-2 py-1 mt-1 rounded-md bg-cyan-700'
+                  />
+                </label>
+                <label className='grid text-cyan-50'>
+                  <p className='text-cyan-50'>Descripción:</p>
+                  <input
+                    type='text'
+                    defaultValue={activity.project_activity}
+                    name='description'
+                    className='px-2 py-1 mt-1 rounded-md bg-cyan-700'
+                  />
+                </label>
+                <label className='grid text-cyan-50'>
+                  <p className='text-cyan-50'>Rubro/Categoría:</p>
+                  <input
+                    type='text'
+                    defaultValue={activity.category}
+                    name='category'
+                    className='px-2 py-1 mt-1 rounded-md bg-cyan-700'
+                  />
+                </label>
+                <div className='flex gap-2 mt-2'>
+                  <button type='submit' className='px-3 py-1 rounded-md bg-cyan-600 hover:bg-cyan-500 text-white text-sm flex-1'>
+                    Actualizar
+                  </button>
+                  <button
+                    type='button'
+                    className='px-3 py-1 rounded-md bg-red-600 hover:bg-red-500 text-white text-sm flex-1'
+                    onClick={() => handleDelete(activity.id_project_activity)}
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </form>
+            ))}
+          </div>
+        )}
+        {(!projectActivities.data || !projectActivities.data[0] || !projectActivities.data[0].list_project_activities_by_project) && (
+          <div className='text-center mb-6'>
+            <h2 className='text-white text-lg mb-2'>No hay actividades disponibles</h2>
+            <p className='text-cyan-200'>Este proyecto aún no tiene actividades creadas.</p>
+          </div>
+        )}
 
-      <h2>Agregar nueva actividad</h2>
-      <form onSubmit={handleAddSubmit} className='flex flex-col gap-4'>
-        <label>
-          Número de actividad:
-          <input type='number' name='numProjectActivity' min='1' max='10' required />
-        </label>
-        <label>
-          Actividad del proyecto:
-          <input type='text' name='projectActivity' required />
-        </label>
-        <label>
-          Rubro/Categoría:
-          <input type='text' name='category' required />
-        </label>
-        <button type='submit'>Agregar</button>
-      </form>
+        <h2 className='text-white text-lg mb-4'>Agregar nueva actividad</h2>
+        <form onSubmit={handleAddSubmit} className='flex flex-col gap-4 w-3/4 max-w-md'>
+          <label className='grid text-cyan-50 mb-4'>
+            <p className='text-cyan-50'>Número de actividad:</p>
+            <input type='number' name='numProjectActivity' min='1' max='10' required className='px-2 py-1 mt-2 rounded-md bg-cyan-700' />
+          </label>
+          <label className='grid text-cyan-50 mb-4'>
+            <p className='text-cyan-50'>Actividad del proyecto:</p>
+            <input type='text' name='projectActivity' required className='px-2 py-1 mt-2 rounded-md bg-cyan-700' />
+          </label>
+          <label className='grid text-cyan-50 mb-4'>
+            <p className='text-cyan-50'>Rubro/Categoría:</p>
+            <input type='text' name='category' required className='px-2 py-1 mt-2 rounded-md bg-cyan-700' />
+          </label>
+          <button type='submit' className='mt-4 px-4 py-2 rounded-md bg-cyan-600 hover:bg-cyan-500 text-white'>Agregar</button>
+        </form>
 
-      <a href={`/projects/${idProject}`}>Ver proyecto completo</a>
+        <a href={`/projects/${idProject}`} className='mt-6 text-cyan-200 hover:text-white'>Ver proyecto completo</a>
+      </section>
     </main>
   )
 }

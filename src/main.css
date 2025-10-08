@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
-input, select, textarea, button, option {
-  all: unset;
+input {
+  appearance: none;
+  outline: none;
 }
 
 select {

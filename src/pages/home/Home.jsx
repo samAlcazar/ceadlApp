@@ -3,8 +3,15 @@ import Card from '../../components/moleculas/Card'
 const Home = () => {
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
-      <h1>Bienvenido a Ceadl App</h1>
-      <section className=' flex'>
+      <h1 className='text-3xl font-bold mb-8'>Qué haremos hoy?</h1>
+      <section className='grid grid-cols-3'>
+        <Card
+          title='Financiadores'
+          linkOne='founders/create'
+          linkTwo='founders/history'
+          aOne='Crear financiador'
+          aTwo='Historial de financiadores'
+        />
         <Card
           title='Proyectos'
           linkOne='projects/create'
@@ -39,6 +46,13 @@ const Home = () => {
           linkTwo=''
           aOne='Crear rendición'
           aTwo='Historial de rendiciones'
+        />
+        <Card
+          title='Participantes'
+          linkOne='participants/create'
+          linkTwo='participants/history'
+          aOne='Crear participantes'
+          aTwo='Historial de participantes'
         />
       </section>
     </main>

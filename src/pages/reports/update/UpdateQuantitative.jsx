@@ -111,7 +111,9 @@ const UpdateQuantitative = () => {
   if (!idActivity) {
     return (
       <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
-        <h1>Cargando actividad...</h1>
+        <section className='flex flex-col justify-center items-center w-[500px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700'>
+          <h1 className='text-white text-2xl'>Cargando actividad...</h1>
+        </section>
       </main>
     )
   }
@@ -120,7 +122,9 @@ const UpdateQuantitative = () => {
   if (quantitative.loading) {
     return (
       <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
-        <h1>Cargando reportes cuantitativos...</h1>
+        <section className='flex flex-col justify-center items-center w-[500px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700'>
+          <h1 className='text-white text-2xl'>Cargando reportes cuantitativos...</h1>
+        </section>
       </main>
     )
   }
@@ -129,125 +133,138 @@ const UpdateQuantitative = () => {
   if (quantitative.error) {
     return (
       <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
-        <h1>Error al cargar reportes cuantitativos</h1>
-        <p>Error: {quantitative.error}</p>
+        <section className='flex flex-col justify-center items-center w-[500px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700'>
+          <h1 className='text-white text-2xl mb-4'>Error al cargar reportes cuantitativos</h1>
+          <p className='text-cyan-200'>Error: {quantitative.error}</p>
+        </section>
       </main>
     )
   }
 
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
-      <h1>Actualizar Reportes Cuantitativos</h1>
+      <section className='flex flex-col justify-center items-center w-[900px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700 overflow-y-auto'>
+        <h1 className='text-white text-2xl mb-8'>Actualizar Reportes Cuantitativos</h1>
 
-      {/* Reportes existentes */}
-      <h2>Reportes Existentes</h2>
-      {quantitative.data && quantitative.data.length > 0 && (
-        <div className='flex'>
-          {quantitative.data[0].list_quantitatives_by_activity.map((report) => (
-            <form onSubmit={handleUpdateSubmit} key={report.id_quantitative} className='flex flex-col'>
-              <h3>Reporte del {report.day}</h3>
-              <input type='hidden' value={report.id_quantitative} name='idQuantitative' />
-              <label>
-                Logrado:
-                <input type='number' name='achieved' defaultValue={report.achieved} min='0' />
-              </label>
-              <label>
-                Día:
-                <input type='date' name='day' defaultValue={report.day} />
-              </label>
-              <label>
-                SP Mujeres:
-                <input type='number' name='spFemale' defaultValue={report.sp_female} min='0' />
-              </label>
-              <label>
-                SP Hombres:
-                <input type='number' name='spMale' defaultValue={report.sp_male} min='0' />
-              </label>
-              <label>
-                F Mujeres:
-                <input type='number' name='fFemale' defaultValue={report.f_female} min='0' />
-              </label>
-              <label>
-                F Hombres:
-                <input type='number' name='fMale' defaultValue={report.f_male} min='0' />
-              </label>
-              <label>
-                NA Mujeres:
-                <input type='number' name='naFemale' defaultValue={report.na_female} min='0' />
-              </label>
-              <label>
-                NA Hombres:
-                <input type='number' name='naMale' defaultValue={report.na_male} min='0' />
-              </label>
-              <label>
-                P Mujeres:
-                <input type='number' name='pFemale' defaultValue={report.p_female} min='0' />
-              </label>
-              <label>
-                P Hombres:
-                <input type='number' name='pMale' defaultValue={report.p_male} min='0' />
-              </label>
-              <button type='submit'>Actualizar</button>
-              <button type='button' onClick={() => handleDelete(report.id_quantitative)}>
-                Eliminar
-              </button>
-            </form>
-          ))}
-        </div>
-      )}
-      {(!quantitative.data || quantitative.data.length === 0) && (
-        <p>No hay reportes cuantitativos disponibles</p>
-      )}
+        {/* Reportes existentes */}
+        <h2 className='text-white text-lg mb-4'>Reportes Existentes</h2>
+        {quantitative.data && quantitative.data.length > 0 && (
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full px-4 mb-6'>
+            {quantitative.data[0].list_quantitatives_by_activity.map((report) => (
+              <form onSubmit={handleUpdateSubmit} key={report.id_quantitative} className='bg-cyan-800 p-4 rounded-lg flex flex-col gap-3'>
+                <h3 className='text-cyan-50 text-lg font-semibold'>Reporte del {report.day}</h3>
+                <input type='hidden' value={report.id_quantitative} name='idQuantitative' />
+                <label className='grid text-cyan-50'>
+                  <p className='text-cyan-50'>Logrado:</p>
+                  <input type='number' name='achieved' defaultValue={report.achieved} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+                </label>
+                <label className='grid text-cyan-50'>
+                  <p className='text-cyan-50'>Día:</p>
+                  <input type='date' name='day' defaultValue={report.day} className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+                </label>
+                <div className='grid grid-cols-2 gap-2'>
+                  <label className='grid text-cyan-50'>
+                    <p className='text-cyan-50 text-sm'>SP Mujeres:</p>
+                    <input type='number' name='spFemale' defaultValue={report.sp_female} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                  </label>
+                  <label className='grid text-cyan-50'>
+                    <p className='text-cyan-50 text-sm'>SP Hombres:</p>
+                    <input type='number' name='spMale' defaultValue={report.sp_male} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                  </label>
+                  <label className='grid text-cyan-50'>
+                    <p className='text-cyan-50 text-sm'>F Mujeres:</p>
+                    <input type='number' name='fFemale' defaultValue={report.f_female} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                  </label>
+                  <label className='grid text-cyan-50'>
+                    <p className='text-cyan-50 text-sm'>F Hombres:</p>
+                    <input type='number' name='fMale' defaultValue={report.f_male} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                  </label>
+                  <label className='grid text-cyan-50'>
+                    <p className='text-cyan-50 text-sm'>NA Mujeres:</p>
+                    <input type='number' name='naFemale' defaultValue={report.na_female} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                  </label>
+                  <label className='grid text-cyan-50'>
+                    <p className='text-cyan-50 text-sm'>NA Hombres:</p>
+                    <input type='number' name='naMale' defaultValue={report.na_male} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                  </label>
+                  <label className='grid text-cyan-50'>
+                    <p className='text-cyan-50 text-sm'>P Mujeres:</p>
+                    <input type='number' name='pFemale' defaultValue={report.p_female} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                  </label>
+                  <label className='grid text-cyan-50'>
+                    <p className='text-cyan-50 text-sm'>P Hombres:</p>
+                    <input type='number' name='pMale' defaultValue={report.p_male} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                  </label>
+                </div>
+                <div className='flex gap-2 mt-2'>
+                  <button type='submit' className='px-3 py-1 rounded-md bg-cyan-600 hover:bg-cyan-500 text-white text-sm flex-1'>Actualizar</button>
+                  <button type='button' onClick={() => handleDelete(report.id_quantitative)} className='px-3 py-1 rounded-md bg-red-600 hover:bg-red-500 text-white text-sm flex-1'>
+                    Eliminar
+                  </button>
+                </div>
+              </form>
+            ))}
+          </div>
+        )}
+        {(!quantitative.data || quantitative.data.length === 0) && (
+          <p className='text-cyan-200'>No hay reportes cuantitativos disponibles</p>
+        )}
 
-      {/* Nuevo reporte */}
-      <h2>Agregar Nuevo Reporte</h2>
-      <form className='flex flex-col' onSubmit={handleCreateSubmit}>
-        <label>
-          Logrado:
-          <input type='number' name='achieved' min='0' required />
-        </label>
-        <label>
-          Día:
-          <input type='date' name='day' required />
-        </label>
-        <label>
-          SP Mujeres:
-          <input type='number' name='spFemale' min='0' defaultValue='0' />
-        </label>
-        <label>
-          SP Hombres:
-          <input type='number' name='spMale' min='0' defaultValue='0' />
-        </label>
-        <label>
-          F Mujeres:
-          <input type='number' name='fFemale' min='0' defaultValue='0' />
-        </label>
-        <label>
-          F Hombres:
-          <input type='number' name='fMale' min='0' defaultValue='0' />
-        </label>
-        <label>
-          NA Mujeres:
-          <input type='number' name='naFemale' min='0' defaultValue='0' />
-        </label>
-        <label>
-          NA Hombres:
-          <input type='number' name='naMale' min='0' defaultValue='0' />
-        </label>
-        <label>
-          P Mujeres:
-          <input type='number' name='pFemale' min='0' defaultValue='0' />
-        </label>
-        <label>
-          P Hombres:
-          <input type='number' name='pMale' min='0' defaultValue='0' />
-        </label>
-        <button type='submit'>
-          Crear nuevo
-        </button>
-      </form>
+        {/* Nuevo reporte */}
+        <h2 className='text-white text-lg mb-4'>Agregar Nuevo Reporte</h2>
+        <form className='flex flex-col gap-4 w-3/4 max-w-md mb-6' onSubmit={handleCreateSubmit}>
+          <label className='grid text-cyan-50 mb-4'>
+            <p className='text-cyan-50'>Logrado:</p>
+            <input type='number' name='achieved' min='0' required className='px-2 py-1 mt-2 rounded-md bg-cyan-700' />
+          </label>
+          <label className='grid text-cyan-50 mb-4'>
+            <p className='text-cyan-50'>Día:</p>
+            <input type='date' name='day' required className='px-2 py-1 mt-2 rounded-md bg-cyan-700' />
+          </label>
+          <div className='bg-cyan-800 p-4 rounded-lg mb-4'>
+            <h4 className='text-cyan-100 text-md mb-3'>Población por Género</h4>
+            <div className='grid grid-cols-2 gap-3'>
+              <label className='grid text-cyan-50'>
+                <p className='text-cyan-50 text-sm'>SP Mujeres:</p>
+                <input type='number' name='spFemale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+              </label>
+              <label className='grid text-cyan-50'>
+                <p className='text-cyan-50 text-sm'>SP Hombres:</p>
+                <input type='number' name='spMale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+              </label>
+              <label className='grid text-cyan-50'>
+                <p className='text-cyan-50 text-sm'>F Mujeres:</p>
+                <input type='number' name='fFemale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+              </label>
+              <label className='grid text-cyan-50'>
+                <p className='text-cyan-50 text-sm'>F Hombres:</p>
+                <input type='number' name='fMale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+              </label>
+              <label className='grid text-cyan-50'>
+                <p className='text-cyan-50 text-sm'>NA Mujeres:</p>
+                <input type='number' name='naFemale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+              </label>
+              <label className='grid text-cyan-50'>
+                <p className='text-cyan-50 text-sm'>NA Hombres:</p>
+                <input type='number' name='naMale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+              </label>
+              <label className='grid text-cyan-50'>
+                <p className='text-cyan-50 text-sm'>P Mujeres:</p>
+                <input type='number' name='pFemale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+              </label>
+              <label className='grid text-cyan-50'>
+                <p className='text-cyan-50 text-sm'>P Hombres:</p>
+                <input type='number' name='pMale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+              </label>
+            </div>
+          </div>
+          <button type='submit' className='mt-4 px-4 py-2 rounded-md bg-cyan-600 hover:bg-cyan-500 text-white'>
+            Crear nuevo
+          </button>
+        </form>
 
-      <a href='/reports/history'>Finalizar</a>
+        <a href='/reports/history' className='mt-4 text-cyan-200 hover:text-white'>Finalizar</a>
+      </section>
     </main>
   )
 }

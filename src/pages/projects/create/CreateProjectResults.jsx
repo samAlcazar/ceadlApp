@@ -53,42 +53,48 @@ const CreateProjectResults = () => {
 
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
-      <h1>Crear resultados esperados del proyecto</h1>
-      <form className='flex flex-col gap-4'>
-        <label>
-          Número de resultado esperado:
-          <input type='number' name='numProjectResult' min='1' max='5' required />
-        </label>
-        <label>
-          Resultado esperado:
-          <input type='text' name='projectResult' required />
-        </label>
-        <button onClick={pushProjectResult}>Agregar</button>
-      </form>
-      <a href={`/projectActivities/create/${idProject}`}>Continúa en el paso 4</a>
-      <section>
-        <h2>Resultados agregados</h2>
-        {
-          projectResults.map((result, index) => (
-            <div key={index}>
-              <p>Número: {result.numProjectResult}</p>
-              <p>Resultado: {result.projectResult}</p>
-              <button onClick={() => deleteProjectResult(index)}>Eliminar</button>
-            </div>
-          ))
-        }
-      </section>
-      <button onClick={handleSubmit}>Subir</button>
-      <section>
-        <h2>Resultados subidos</h2>
-        {
-          allProjectResults.map((result, index) => (
-            <div key={index}>
-              <p>Número: {result.num_project_result}</p>
-              <p>Resultado: {result.project_result}</p>
-            </div>
-          ))
-        }
+      <section className='flex flex-col justify-center items-center w-[500px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700'>
+        <h1 className='text-white text-2xl mb-8'>Crear resultados esperados del proyecto</h1>
+        <form className='flex flex-col gap-4 w-3/4'>
+          <label className='grid text-cyan-50 mb-4'>
+            <p className='text-cyan-50'>Número de resultado esperado:</p>
+            <input type='number' name='numProjectResult' min='1' max='5' required className='px-2 py-1 mt-2 rounded-md bg-cyan-700' />
+          </label>
+          <label className='grid text-cyan-50 mb-4'>
+            <p className='text-cyan-50'>Resultado esperado:</p>
+            <input type='text' name='projectResult' required className='px-2 py-1 mt-2 rounded-md bg-cyan-700' />
+          </label>
+          <button onClick={pushProjectResult} className='mt-4 px-4 py-2 rounded-md bg-cyan-600 hover:bg-cyan-500 text-white'>Agregar</button>
+        </form>
+        <section className='mt-4 w-3/4'>
+          <h2 className='text-white text-lg mb-4'>Resultados agregados</h2>
+          <div className='flex flex-col gap-2 mb-4'>
+            {
+              projectResults.map((result, index) => (
+                <div key={index} className='bg-cyan-800 p-3 rounded-md'>
+                  <p className='text-cyan-50'>Número: {result.numProjectResult}</p>
+                  <p className='text-cyan-50'>Resultado: {result.projectResult}</p>
+                  <button onClick={() => deleteProjectResult(index)} className='mt-2 px-3 py-1 rounded-md bg-red-600 hover:bg-red-500 text-white text-sm'>Eliminar</button>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+        <button onClick={handleSubmit} className='mt-4 px-4 py-2 rounded-md bg-cyan-600 hover:bg-cyan-500 text-white'>Subir resultados</button>
+        <a href={`/projectActivities/create/${idProject}`} className='mt-4 text-cyan-200 hover:text-white'>Continúa en el paso 4</a>
+        <section className='mt-4 w-3/4'>
+          <h2 className='text-white text-lg mb-4'>Resultados subidos</h2>
+          <div className='flex flex-col gap-2'>
+            {
+              allProjectResults.map((result, index) => (
+                <div key={index} className='bg-cyan-800 p-3 rounded-md'>
+                  <p className='text-cyan-50'>Número: {result.num_project_result}</p>
+                  <p className='text-cyan-50'>Resultado: {result.project_result}</p>
+                </div>
+              ))
+            }
+          </div>
+        </section>
       </section>
     </main>
   )
