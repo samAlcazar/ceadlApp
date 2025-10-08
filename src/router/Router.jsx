@@ -8,15 +8,19 @@ import CreateActivity from '../pages/activity/CreateActivity'
 import UpdateActivity from '../pages/activity/UpdateActivity'
 
 // Proyectos
+import Project from '../pages/projects/Project'
 import CreateProject from '../pages/projects/create/CreateProject'
 import UpdateProject from '../pages/projects/update/UpdateProject'
 import CreateEspecifics from '../pages/projects/create/CreateEspecifics'
+import UpdateEspecifics from '../pages/projects/update/UpdateEspecifics'
+import CreateProjectResults from '../pages/projects/create/CreateProjectResults'
+import UpdateProjectResults from '../pages/projects/update/UpdateProjectResults'
+import CreateProjectActivities from '../pages/projects/create/CreateProjectActivities'
+import HistoryProjects from '../pages/projects/HistoryProjects'
 
 // Reportes
 import CreateReport from '../pages/reports/CreateReport'
 import UpdateReport from '../pages/reports/UpdateReport'
-import CreateProjectResults from '../pages/projects/create/CreateProjectResults'
-import CreateProjectActivities from '../pages/projects/create/CreateProjectActivities'
 
 // Rendiciones
 import CreateAccountability from '../pages/accountability/CreateAccountability'
@@ -25,12 +29,9 @@ import UpdateAccountability from '../pages/accountability/UpdateAccountability'
 // Postulaciones
 import CreateApplication from '../pages/applications/CreateApplication'
 import UpdateApplication from '../pages/applications/UpdateApplication'
-import HistoryProjects from '../pages/projects/HistoryProjects'
 import CreateQuantitative from '../pages/reports/CreateQuantitative'
 import CreateBudget from '../pages/applications/CreateBudget'
 import CreateSurrender from '../pages/accountability/CreateSurrender'
-import Project from '../pages/projects/Project'
-import UpdateEspecifics from '../pages/projects/update/UpdateEspecifics'
 
 const Router = () => {
   return (
@@ -57,6 +58,7 @@ const Router = () => {
         </Route>
         <Route path='projectResults'>
           <Route path='create/:idProject' element={<CreateProjectResults />} />
+          <Route path='update/:idProject' element={<UpdateProjectResults />} />
         </Route>
         <Route path='projectActivities'>
           <Route path='create/:idProject' element={<CreateProjectActivities />} />
