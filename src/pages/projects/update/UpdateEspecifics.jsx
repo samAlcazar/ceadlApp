@@ -46,6 +46,57 @@ const UpdateEspecifics = () => {
       })
   }
 
+  const handleDelete = (idEspecific) => {
+    fetch(`${URL}especifics/${idEspecific}`, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al eliminar el específico')
+        }
+        return response.json()
+      })
+      .then(data => {
+        console.log('Específico eliminado:', data)
+        window.location.reload() // Recarga la página para ver los cambios
+      })
+      .catch(error => {
+        console.error('Error:', error)
+      })
+  }
+
+  const handleAddSubmit = (e) => {
+    e.preventDefault()
+
+    const body = {
+      numEspecific: Number(e.target.numEspecific.value),
+      especific: e.target.especific.value,
+      idUser: user.idUser,
+      idProject
+    }
+
+    fetch(`${URL}especifics`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al agregar el específico')
+        }
+        return response.json()
+      })
+      .then(data => {
+        console.log('Específico agregado:', data)
+        window.location.reload() // Recarga la página para ver los cambios
+      })
+      .catch(error => {
+        console.error('Error:', error)
+      })
+  }
+
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
       <h1>Actualizar Específicos</h1>
@@ -82,7 +133,14 @@ const UpdateEspecifics = () => {
                 />
               </label>
               <button type='submit' className='text-white px-4 py-2 rounded mr-2'>
-                Editar
+                Actualizar
+              </button>
+              <button
+                type='button'
+                className='bg-red-500 text-white px-4 py-2 rounded'
+                onClick={() => handleDelete(especific.id_especific)}
+              >
+                Eliminar
               </button>
             </form>
           ))}
@@ -96,7 +154,7 @@ const UpdateEspecifics = () => {
       )}
 
       <h2>Agregar nuevo específico</h2>
-      <form className='flex flex-col gap-4'>
+      <form onSubmit={handleAddSubmit} className='flex flex-col gap-4'>
         <label>
           Número de objetivo específico:
           <input type='number' name='numEspecific' min='1' max='5' required />
