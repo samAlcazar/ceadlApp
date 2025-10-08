@@ -16,6 +16,7 @@ import UpdateEspecifics from '../pages/projects/update/UpdateEspecifics'
 import CreateProjectResults from '../pages/projects/create/CreateProjectResults'
 import UpdateProjectResults from '../pages/projects/update/UpdateProjectResults'
 import CreateProjectActivities from '../pages/projects/create/CreateProjectActivities'
+import UpdateProjectActivities from '../pages/projects/update/UpdateProjectActivities'
 import HistoryProjects from '../pages/projects/HistoryProjects'
 
 // Reportes
@@ -62,6 +63,7 @@ const Router = () => {
         </Route>
         <Route path='projectActivities'>
           <Route path='create/:idProject' element={<CreateProjectActivities />} />
+          <Route path='update/:idProject' element={<UpdateProjectActivities />} />
         </Route>
 
         {/* Rutas de Reportes */}
