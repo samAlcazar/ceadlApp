@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import Authorized from '../../hooks/Authorized'
+import Authorized from '../../../hooks/Authorized'
 import { useParams } from 'react-router-dom'
-import { URL } from '../../../utils/url'
+import { URL } from '../../../../utils/url'
 
 const CreateQuantitative = () => {
   const user = Authorized()
@@ -43,7 +43,7 @@ const CreateQuantitative = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    fetch(`${URL}quantitative/bulk`, {
+    fetch(`${URL}quantitatives/bulk`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

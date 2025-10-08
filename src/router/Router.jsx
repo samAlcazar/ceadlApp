@@ -20,19 +20,28 @@ import UpdateProjectActivities from '../pages/projects/update/UpdateProjectActiv
 import HistoryProjects from '../pages/projects/HistoryProjects'
 
 // Reportes
-import CreateReport from '../pages/reports/CreateReport'
-import UpdateReport from '../pages/reports/UpdateReport'
+import CreateReport from '../pages/reports/create/CreateReport'
+import UpdateReport from '../pages/reports/update/UpdateReport'
+import CreateQuantitative from '../pages/reports/create/CreateQuantitative'
+import UpdateQuantitative from '../pages/reports/update/UpdateQuantitative'
+import HistoryReports from '../pages/reports/HistoryReports'
+import Report from '../pages/reports/Report'
 
 // Rendiciones
-import CreateAccountability from '../pages/accountability/CreateAccountability'
-import UpdateAccountability from '../pages/accountability/UpdateAccountability'
+import CreateAccountability from '../pages/accountability/create/CreateAccountability'
+import UpdateAccountability from '../pages/accountability/update/UpdateAccountability'
+import CreateSurrender from '../pages/accountability/create/CreateSurrender'
+import UpdateSurrender from '../pages/accountability/update/UpdateSurrender'
+import HistoryAccountability from '../pages/accountability/HistoryAccountability'
+import Accountability from '../pages/accountability/Accountability'
 
 // Postulaciones
-import CreateApplication from '../pages/applications/CreateApplication'
-import UpdateApplication from '../pages/applications/UpdateApplication'
-import CreateQuantitative from '../pages/reports/CreateQuantitative'
-import CreateBudget from '../pages/applications/CreateBudget'
-import CreateSurrender from '../pages/accountability/CreateSurrender'
+import CreateApplication from '../pages/applications/create/CreateApplication'
+import UpdateApplication from '../pages/applications/update/UpdateApplication'
+import CreateBudget from '../pages/applications/create/CreateBudget'
+import UpdateBudget from '../pages/applications/update/UpdateBudget'
+import HistoryApplications from '../pages/applications/HistoryApplications'
+import Application from '../pages/applications/Application'
 
 const Router = () => {
   return (
@@ -70,27 +79,36 @@ const Router = () => {
         <Route path='reports'>
           <Route path='create' element={<CreateReport />} />
           <Route path='update/:idReport' element={<UpdateReport />} />
+          <Route path='history' element={<HistoryReports />} />
+          <Route path=':idReport' element={<Report />} />
         </Route>
         <Route path='quantitative'>
           <Route path='create/:idActivity' element={<CreateQuantitative />} />
+          <Route path='update/:idActivity' element={<UpdateQuantitative />} />
         </Route>
 
         {/* Rutas de Rendiciones */}
         <Route path='accountability'>
           <Route path='create' element={<CreateAccountability />} />
           <Route path='update/:idAccountability' element={<UpdateAccountability />} />
+          <Route path='history' element={<HistoryAccountability />} />
+          <Route path=':idAccountability' element={<Accountability />} />
         </Route>
         <Route path='surrenders'>
           <Route path='create/:idAccountability' element={<CreateSurrender />} />
+          <Route path='update/:idSurrender' element={<UpdateSurrender />} />
         </Route>
 
         {/* Rutas de Solicitudes */}
         <Route path='applications'>
           <Route path='create' element={<CreateApplication />} />
           <Route path='update/:idApplication' element={<UpdateApplication />} />
+          <Route path='history' element={<HistoryApplications />} />
+          <Route path=':idApplication' element={<Application />} />
         </Route>
         <Route path='budgets'>
           <Route path='create/:idApplication' element={<CreateBudget />} />
+          <Route path='update/:idBudget' element={<UpdateBudget />} />
         </Route>
       </Route>
 

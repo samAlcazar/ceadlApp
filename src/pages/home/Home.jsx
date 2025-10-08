@@ -22,7 +22,7 @@ const Home = () => {
         <Card
           title='Informes'
           linkOne='reports/create'
-          linkTwo=''
+          linkTwo='reports/history'
           aOne='Crear informe'
           aTwo='Historial de informes'
         />
