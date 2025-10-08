@@ -29,7 +29,7 @@ const Home = () => {
         <Card
           title='Solicitudes'
           linkOne='applications/create'
-          linkTwo=''
+          linkTwo='applications/history'
           aOne='Crear solicitud'
           aTwo='Historial de solicitudes'
         />

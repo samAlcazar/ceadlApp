@@ -2,10 +2,12 @@ import Data from '../../../hooks/Data'
 import Authorized from '../../../hooks/Authorized'
 import { useParams } from 'react-router-dom'
 import { URL } from '../../../../utils/url'
+import { useState } from 'react'
 
 const UpdateApplication = () => {
   const user = Authorized()
   const { idApplication } = useParams()
+  const [updateApplication, setUpdateApplication] = useState({})
 
   const applicationLink = idApplication ? `applications/${idApplication}` : null
   const application = Data(applicationLink)
@@ -22,7 +24,7 @@ const UpdateApplication = () => {
 
     const body = {
       amount: parseFloat(e.target.amount.value),
-      approved: e.target.approved.checked,
+      approved: false,
       idProject: e.target.idProject.value,
       idActivity: e.target.idActivity.value,
       idUser: user.idUser
@@ -43,7 +45,7 @@ const UpdateApplication = () => {
       })
       .then(data => {
         console.log('Aplicación actualizada:', data)
-        window.location.reload()
+        setUpdateApplication(data)
       })
       .catch(error => {
         console.error('Error:', error)
@@ -79,7 +81,7 @@ const UpdateApplication = () => {
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
       <h1>Actualizar Aplicación</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <label>
           Monto (USD):
           <input
@@ -87,18 +89,9 @@ const UpdateApplication = () => {
             name='amount'
             step='0.01'
             min='0'
-            defaultValue={application.data?.amount || ''}
+            defaultValue={application.data?.read_application.amount || ''}
             required
           />
-        </label>
-
-        <label>
-          <input
-            type='checkbox'
-            name='approved'
-            defaultChecked={application.data?.approved || false}
-          />
-          Aprobado
         </label>
         <label>
           Proyecto:
@@ -128,9 +121,12 @@ const UpdateApplication = () => {
         </label>
         <button type='submit'>Actualizar Aplicación</button>
       </form>
-
+      <section>
+        <h2>Solicitud actualizada</h2>
+        <p>{JSON.stringify(updateApplication)}</p>
+      </section>
       {application.data && (
-        <a href={`/budgets/update/${application.data.idActivity || 'default'}`}>
+        <a href={`/budgets/update/${application.data?.read_application.id_application || 'default'}`}>
           Continuar al paso 2
         </a>
       )}

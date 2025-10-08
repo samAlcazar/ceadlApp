@@ -2,12 +2,16 @@ import { useState, useEffect } from 'react'
 import Authorized from '../../../hooks/Authorized'
 import { useParams } from 'react-router-dom'
 import { URL } from '../../../../utils/url'
+import Data from '../../../hooks/Data'
 
 const CreateBudget = () => {
   const user = Authorized()
-  const { idApplication, idFounder } = useParams()
+  const { idApplication } = useParams()
   const [allBudgets, setAllBudgets] = useState([])
   const [budgets, setBudgets] = useState([])
+
+  const founders = Data('founders')
+  console.log(founders)
 
   // useEffect para ver cuando cambia el estado
   useEffect(() => {
@@ -26,7 +30,7 @@ const CreateBudget = () => {
       importUSD: parseFloat(form.importUSD.value),
       importBOB: parseFloat(form.importBOB.value),
       idApplication,
-      idFounder,
+      idFounder: form.idFounder.value,
       idUser: user.idUser
     }
 
@@ -39,7 +43,7 @@ const CreateBudget = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    fetch(`${URL}budget/bulk`, {
+    fetch(`${URL}budgets/bulk`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -59,14 +63,8 @@ const CreateBudget = () => {
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
       <h1>Crear Presupuesto</h1>
-      <div>
-        <strong>ID Aplicación:</strong> {idApplication || 'No definido'}
-      </div>
-      <div>
-        <strong>ID Fundador:</strong> {idFounder || 'No definido'}
-      </div>
 
-      <form>
+      <form className='flex flex-col gap-4'>
         <label>
           Cantidad:
           <input type='number' name='quantity' min='1' required />
@@ -91,6 +89,20 @@ const CreateBudget = () => {
           <input type='number' name='importBOB' step='0.01' min='0' required />
         </label>
 
+        <label>
+          Financiador:
+          <select name='idFounder'>
+            <option value=''>Seleccionar financiador</option>
+            {founders.data && founders.data[0]
+              ? founders.data.map((founder) => (
+                <option key={founder.id_founder} value={founder.id_founder}>
+                  {founder.name_founder}
+                </option>
+              ))
+              : null}
+          </select>
+        </label>
+
         <button type='button' onClick={pushBudget}>Agregar Presupuesto</button>
       </form>
 
@@ -103,6 +115,7 @@ const CreateBudget = () => {
             <p>Descripción: {budget.description}</p>
             <p>USD: ${budget.importUSD}</p>
             <p>BOB: Bs {budget.importBOB}</p>
+            <p>Financiador ID: {budget.idFounder}</p>
           </div>
         ))}
       </section>
@@ -111,17 +124,11 @@ const CreateBudget = () => {
 
       <section>
         <h2>Presupuestos Subidos</h2>
-        {allBudgets.map((budget, index) => (
-          <div key={index}>
-            <p>ID: {budget.id_budget}</p>
-            <p>Cantidad: {budget.quantity}</p>
-            <p>Código: {budget.code}</p>
-            <p>Descripción: {budget.description}</p>
-            <p>USD: ${budget.import_usd}</p>
-            <p>BOB: Bs {budget.import_bob}</p>
-          </div>
-        ))}
+        <p>{JSON.stringify(allBudgets)}</p>
       </section>
+      <a href='/applications/history'>
+        Finalizar
+      </a>
     </main>
   )
 }

@@ -1,11 +1,14 @@
 import Authorized from '../../../hooks/Authorized'
 import Data from '../../../hooks/Data'
 import { URL } from '../../../../utils/url'
+import { useState } from 'react'
 
 const CreateApplication = () => {
   const user = Authorized()
   const projects = Data('projects')
   const activities = Data('activities')
+
+  const [newApplication, setNewApplication] = useState({})
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -17,7 +20,7 @@ const CreateApplication = () => {
 
     const body = {
       amount: parseFloat(e.target.amount.value),
-      approved: e.target.approved.checked,
+      approved: false,
       idProject: e.target.idProject.value,
       idActivity: e.target.idActivity.value,
       idUser: user.idUser
@@ -38,10 +41,7 @@ const CreateApplication = () => {
       })
       .then(data => {
         console.log('Aplicación creada:', data)
-        const activityId = e.target.idActivity.value
-        if (activityId) {
-          window.location.href = `/budgets/create/${activityId}`
-        }
+        setNewApplication(data)
       })
       .catch(error => {
         console.error('Error:', error)
@@ -55,10 +55,6 @@ const CreateApplication = () => {
         <label>
           Monto (USD):
           <input type='number' name='amount' step='0.01' min='0' placeholder='0.00' required />
-        </label>
-        <label>
-          <input type='checkbox' name='approved' />
-          Aprobado
         </label>
         <label>
           Proyecto:
@@ -88,7 +84,11 @@ const CreateApplication = () => {
         </label>
         <button type='submit'>Crear Solicitud</button>
       </form>
-      <a href='/budgets/create/cc7a695b-f1dd-4ad8-9701-62e79f37295c'>
+      <section>
+        <h2>Solicitud creada</h2>
+        <p>{JSON.stringify(newApplication)}</p>
+      </section>
+      <a href={`/budgets/create/${newApplication?.create_application.id_application}`}>
         Ir al paso 2 - añadir items
       </a>
     </main>
