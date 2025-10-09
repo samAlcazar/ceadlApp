@@ -52,6 +52,12 @@ import Print from '../pages/Print'
 import CreateFounder from '../pages/founders/CreateFounder'
 import UpdateFounder from '../pages/founders/UpdateFounder'
 import HistoryFounders from '../pages/founders/HistoryFounders'
+import CreateProfile from '../pages/profiles/CreateProfile'
+import UpdateProfile from '../pages/profiles/UpdateProfile'
+import HistoryProfiles from '../pages/profiles/HistoryProfiles'
+import CreateUser from '../pages/users/CreateUser'
+import UpdateUser from '../pages/users/UpdateUser'
+import HistoryUsers from '../pages/users/HistoryUsers'
 
 const Router = () => {
   return (
@@ -63,6 +69,18 @@ const Router = () => {
           <Route path='create' element={<CreateFounder />} />
           <Route path='update/:idFounder' element={<UpdateFounder />} />
           <Route path='history' element={<HistoryFounders />} />
+        </Route>
+
+        <Route path='profiles'>
+          <Route path='create' element={<CreateProfile />} />
+          <Route path='update/:idProfile' element={<UpdateProfile />} />
+          <Route path='history' element={<HistoryProfiles />} />
+        </Route>
+
+        <Route path='users'>
+          <Route path='create' element={<CreateUser />} />
+          <Route path='update/:idUser' element={<UpdateUser />} />
+          <Route path='history' element={<HistoryUsers />} />
         </Route>
 
         {/* Rutas de Actividades */}

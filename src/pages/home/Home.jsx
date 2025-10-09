@@ -6,6 +6,22 @@ const Home = () => {
       <h1 className='text-3xl font-bold mb-8'>Qué haremos hoy?</h1>
       <section className='grid grid-cols-3'>
         <Card
+          title='Perfiles'
+          linkOne='profiles/create'
+          linkTwo='profiles/history'
+          aOne='Crear perfil'
+          aTwo='Historial de perfiles'
+        />
+
+        <Card
+          title='Usuarios'
+          linkOne='users/create'
+          linkTwo='users/history'
+          aOne='Crear usuario'
+          aTwo='Historial de usuarios'
+        />
+
+        <Card
           title='Financiadores'
           linkOne='founders/create'
           linkTwo='founders/history'
