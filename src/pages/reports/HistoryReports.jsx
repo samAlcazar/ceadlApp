@@ -59,7 +59,7 @@ const HistoryReports = () => {
                         </a>
                         <span className='text-cyan-400'>|</span>
                         <a
-                          href={`/reports/${report.id_report}`}
+                          href={`/print/report/${report.id_report}`}
                           className='text-cyan-200 hover:text-white text-sm underline'
                         >
                           Ver

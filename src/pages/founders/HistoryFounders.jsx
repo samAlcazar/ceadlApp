@@ -1,54 +1,45 @@
 import Data from '../../hooks/Data'
 
-const HistoryProjects = () => {
-  const projects = Data('projects')
+const HistoryFounders = () => {
+  const founders = Data('founders')
 
-  const listData = projects.data ? projects.data[0].list_projects : []
+  const listData = founders.data ? founders.data : []
 
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
-      <section className='flex flex-col justify-center items-center w-[900px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700 overflow-y-auto px-6 py-8'>
-        <h1 className='text-white text-2xl mb-8'>Historial de Proyectos</h1>
+      <section className='flex flex-col justify-center items-center w-[1200px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700 overflow-y-auto px-6 py-8'>
+        <h1 className='text-white text-2xl mb-8'>Historial de Fundadores</h1>
         <div className='w-full bg-cyan-800 rounded-lg p-6 overflow-x-auto'>
           <table className='w-full text-white'>
             <thead>
               <tr className='border-b border-cyan-600'>
                 <th className='text-left py-3 px-4 text-cyan-100'>Nro</th>
-                <th className='text-left py-3 px-4 text-cyan-100'>Nombre</th>
                 <th className='text-left py-3 px-4 text-cyan-100'>Código</th>
-                <th className='text-left py-3 px-4 text-cyan-100'>Objetivo</th>
+                <th className='text-left py-3 px-4 text-cyan-100'>Nombre del Fundador</th>
                 <th className='text-left py-3 px-4 text-cyan-100'>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {
-                listData.map((project, index) => (
-                  <tr key={project.id_project} className='border-b border-cyan-700 hover:bg-cyan-700 transition-colors'>
+                listData.map((item, index) => (
+                  <tr key={item.id_founder} className='border-b border-cyan-700 hover:bg-cyan-700 transition-colors'>
                     <td className='py-3 px-4'>{index + 1}</td>
-                    <td className='py-3 px-4'>{project.name_project}</td>
-                    <td className='py-3 px-4'>{project.cod_project || 'N/A'}</td>
-                    <td className='py-3 px-4'>{project.objetive_project || 'N/A'}</td>
+                    <td className='py-3 px-4'>{item.cod_founder || 'N/A'}</td>
+                    <td className='py-3 px-4'>{item.name_founder || 'N/A'}</td>
                     <td className='py-3 px-4'>
                       <div className='flex gap-2'>
                         <a
-                          href={`/projects/update/${project.id_project}`}
+                          href={`/founders/update/${item.id_founder}`}
                           className='text-cyan-200 hover:text-white text-sm underline'
                         >
                           Editar
                         </a>
                         <span className='text-cyan-400'>|</span>
                         <a
-                          href={`/projects/delete/${project.id_project}`}
+                          href={`/founders/delete/${item.id_founder}`}
                           className='text-red-300 hover:text-red-100 text-sm underline'
                         >
                           Eliminar
-                        </a>
-                        <span className='text-cyan-400'>|</span>
-                        <a
-                          href={`/print/project/${project.id_project}`}
-                          className='text-cyan-200 hover:text-white text-sm underline'
-                        >
-                          Ver
                         </a>
                       </div>
                     </td>
@@ -60,10 +51,10 @@ const HistoryProjects = () => {
         </div>
         <div className='mt-6'>
           <a
-            href='/projects/create'
+            href='/founders/create'
             className='px-6 py-3 rounded-md bg-cyan-600 hover:bg-cyan-500 text-white transition-colors'
           >
-            Nuevo Proyecto
+            Nuevo Fundador
           </a>
         </div>
       </section>
@@ -71,4 +62,4 @@ const HistoryProjects = () => {
   )
 }
 
-export default HistoryProjects
+export default HistoryFounders

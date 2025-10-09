@@ -59,7 +59,7 @@ const HistoryApplications = () => {
                         </a>
                         <span className='text-cyan-400'>|</span>
                         <a
-                          href={`/applications/${item.id_application}`}
+                          href={`/print/application/${item.id_application}`}
                           className='text-cyan-200 hover:text-white text-sm underline'
                         >
                           Ver

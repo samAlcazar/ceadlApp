@@ -43,7 +43,7 @@ const Home = () => {
         <Card
           title='Rendiciones'
           linkOne='accountability/create'
-          linkTwo=''
+          linkTwo='accountability/history'
           aOne='Crear rendición'
           aTwo='Historial de rendiciones'
         />

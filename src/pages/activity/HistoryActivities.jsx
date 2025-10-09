@@ -49,7 +49,7 @@ const HistoryActivities = () => {
                         </a>
                         <span className='text-cyan-400'>|</span>
                         <a
-                          href={`/activities/${item.id_activity}`}
+                          href={`/print/activity/${item.id_activity}`}
                           className='text-cyan-200 hover:text-white text-sm underline'
                         >
                           Ver

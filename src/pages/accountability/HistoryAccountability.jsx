@@ -59,7 +59,7 @@ const HistoryAccountability = () => {
                         </a>
                         <span className='text-cyan-400'>|</span>
                         <a
-                          href={`/accountability/${item.id_accountability}`}
+                          href={`/print/accountability/${item.id_accountability}`}
                           className='text-cyan-200 hover:text-white text-sm underline'
                         >
                           Ver

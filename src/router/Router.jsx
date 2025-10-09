@@ -49,12 +49,21 @@ import ListParticipants from '../pages/participants/ListParticipants'
 import UpdateParticipants from '../pages/participants/UpdateParticipants'
 import Estadistics from '../pages/participants/Estadistics'
 import Print from '../pages/Print'
+import CreateFounder from '../pages/founders/CreateFounder'
+import UpdateFounder from '../pages/founders/UpdateFounder'
+import HistoryFounders from '../pages/founders/HistoryFounders'
 
 const Router = () => {
   return (
     <Routes>
       <Route path='/' element={<App />}>
         <Route index element={<Home />} />
+
+        <Route path='founders'>
+          <Route path='create' element={<CreateFounder />} />
+          <Route path='update/:idFounder' element={<UpdateFounder />} />
+          <Route path='history' element={<HistoryFounders />} />
+        </Route>
 
         {/* Rutas de Actividades */}
         <Route path='activities'>
@@ -125,11 +134,11 @@ const Router = () => {
       </Route>
 
       <Route path='print' element={<Print />}>
-        <Route path=':idProject' element={<Project />} />
-        <Route path=':idActivity' element={<Activity />} />
-        <Route path=':idReport' element={<Report />} />
-        <Route path=':idAccountability' element={<Accountability />} />
-        <Route path=':idApplication' element={<Application />} />
+        <Route path='project/:idProject' element={<Project />} />
+        <Route path='activity/:idActivity' element={<Activity />} />
+        <Route path='report/:idReport' element={<Report />} />
+        <Route path='accountability/:idAccountability' element={<Accountability />} />
+        <Route path='application/:idApplication' element={<Application />} />
       </Route>
 
       <Route path='/login' element={<Login />} />
