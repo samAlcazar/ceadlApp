@@ -5,7 +5,7 @@ import Data from '../../../hooks/Data'
 
 const CreateProject = () => {
   const user = Authorized()
-  const [project, setProject] = useState({})
+  const [project, setProject] = useState(null)
   const founders = Data('founders')
 
   const handleSubmit = (e) => {
@@ -57,7 +57,7 @@ const CreateProject = () => {
           </label>
           <label className='grid text-cyan-50 mb-4'>
             <p className='text-cyan-50'>Objetivo del proyecto:</p>
-            <input type='text' name='objetiveProject' className='px-2 py-1 mt-2 rounded-md bg-cyan-700' />
+            <textarea name='objetiveProject' className='px-2 py-1 mt-2 rounded-md bg-cyan-700 resize-vertical' rows={3} />
           </label>
           <label className='grid text-cyan-50 mb-4'>
             <p className='text-cyan-50'>Financiador:</p>
@@ -72,9 +72,9 @@ const CreateProject = () => {
           </label>
           <button type='submit' className='mt-4 px-4 py-2 rounded-md bg-cyan-600 hover:bg-cyan-500 text-white'>Crear proyecto</button>
         </form>
-        <a href={`/especifics/create/${param}`} className='mt-4 text-cyan-200 hover:text-white'>Continúa en el paso 2</a>
         <section className='mt-4'>
-          {JSON.stringify(project)}
+          <p>{project !== null ? 'El informe se ha creado con éxito' : 'Aún no se ha creado el informe'}</p>
+          <a href={`/especifics/create/${param}`} className='mt-4 text-cyan-200 hover:text-white' style={{ display: project !== null ? 'block' : 'none' }}>Continúa en el paso 2</a>
         </section>
       </section>
     </main>

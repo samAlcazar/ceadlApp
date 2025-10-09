@@ -143,57 +143,58 @@ const UpdateQuantitative = () => {
 
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
-      <section className='flex flex-col justify-center items-center w-[900px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700 overflow-y-auto'>
+      <section className='flex flex-col justify-center items-center w-[1000px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700 overflow-y-auto'>
         <h1 className='text-white text-2xl mb-8'>Actualizar Reportes Cuantitativos</h1>
 
         {/* Reportes existentes */}
-        <h2 className='text-white text-lg mb-4'>Reportes Existentes</h2>
         {quantitative.data && quantitative.data.length > 0 && (
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full px-4 mb-6'>
+          <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 mb-6 text-sm'>
             {quantitative.data[0].list_quantitatives_by_activity.map((report) => (
               <form onSubmit={handleUpdateSubmit} key={report.id_quantitative} className='bg-cyan-800 p-4 rounded-lg flex flex-col gap-3'>
-                <h3 className='text-cyan-50 text-lg font-semibold'>Reporte del {report.day}</h3>
+                <h3 className='text-cyan-50 text-sm font-semibold'>Cualitativos del {report.day}</h3>
                 <input type='hidden' value={report.id_quantitative} name='idQuantitative' />
-                <label className='grid text-cyan-50'>
-                  <p className='text-cyan-50'>Logrado:</p>
-                  <input type='number' name='achieved' defaultValue={report.achieved} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
-                </label>
-                <label className='grid text-cyan-50'>
-                  <p className='text-cyan-50'>Día:</p>
-                  <input type='date' name='day' defaultValue={report.day} className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
-                </label>
                 <div className='grid grid-cols-2 gap-2'>
                   <label className='grid text-cyan-50'>
-                    <p className='text-cyan-50 text-sm'>SP Mujeres:</p>
-                    <input type='number' name='spFemale' defaultValue={report.sp_female} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                    <p className='text-cyan-50'>Logrado:</p>
+                    <input type='number' name='achieved' defaultValue={report.achieved} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 w-[60px]' />
                   </label>
                   <label className='grid text-cyan-50'>
-                    <p className='text-cyan-50 text-sm'>SP Hombres:</p>
-                    <input type='number' name='spMale' defaultValue={report.sp_male} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                    <p className='text-cyan-50'>Día:</p>
+                    <input type='date' name='day' defaultValue={report.day} className='px-2 py-1 mt-1 rounded-md bg-cyan-700 w-[120px]' />
+                  </label>
+                </div>
+                <div className='grid grid-cols-4 gap-2'>
+                  <label className='grid text-cyan-50'>
+                    <p className='text-cyan-50 text-sm'>SP M:</p>
+                    <input type='number' name='spFemale' defaultValue={report.sp_female} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm w-[60px]' />
                   </label>
                   <label className='grid text-cyan-50'>
-                    <p className='text-cyan-50 text-sm'>F Mujeres:</p>
-                    <input type='number' name='fFemale' defaultValue={report.f_female} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                    <p className='text-cyan-50 text-sm'>SP H:</p>
+                    <input type='number' name='spMale' defaultValue={report.sp_male} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm w-[60px]' />
                   </label>
                   <label className='grid text-cyan-50'>
-                    <p className='text-cyan-50 text-sm'>F Hombres:</p>
-                    <input type='number' name='fMale' defaultValue={report.f_male} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                    <p className='text-cyan-50 text-sm'>F M:</p>
+                    <input type='number' name='fFemale' defaultValue={report.f_female} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm w-[60px]' />
                   </label>
                   <label className='grid text-cyan-50'>
-                    <p className='text-cyan-50 text-sm'>NA Mujeres:</p>
-                    <input type='number' name='naFemale' defaultValue={report.na_female} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                    <p className='text-cyan-50 text-sm'>F H:</p>
+                    <input type='number' name='fMale' defaultValue={report.f_male} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm w-[60px]' />
                   </label>
                   <label className='grid text-cyan-50'>
-                    <p className='text-cyan-50 text-sm'>NA Hombres:</p>
-                    <input type='number' name='naMale' defaultValue={report.na_male} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                    <p className='text-cyan-50 text-sm'>NA M:</p>
+                    <input type='number' name='naFemale' defaultValue={report.na_female} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm w-[60px]' />
                   </label>
                   <label className='grid text-cyan-50'>
-                    <p className='text-cyan-50 text-sm'>P Mujeres:</p>
-                    <input type='number' name='pFemale' defaultValue={report.p_female} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                    <p className='text-cyan-50 text-sm'>NA H:</p>
+                    <input type='number' name='naMale' defaultValue={report.na_male} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm w-[60px]' />
                   </label>
                   <label className='grid text-cyan-50'>
-                    <p className='text-cyan-50 text-sm'>P Hombres:</p>
-                    <input type='number' name='pMale' defaultValue={report.p_male} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm' />
+                    <p className='text-cyan-50 text-sm'>P M:</p>
+                    <input type='number' name='pFemale' defaultValue={report.p_female} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm w-[60px]' />
+                  </label>
+                  <label className='grid text-cyan-50'>
+                    <p className='text-cyan-50 text-sm'>P H:</p>
+                    <input type='number' name='pMale' defaultValue={report.p_male} min='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 text-sm w-[60px]' />
                   </label>
                 </div>
                 <div className='flex gap-2 mt-2'>
@@ -207,63 +208,66 @@ const UpdateQuantitative = () => {
           </div>
         )}
         {(!quantitative.data || quantitative.data.length === 0) && (
-          <p className='text-cyan-200'>No hay reportes cuantitativos disponibles</p>
+          <div className='text-center mb-6'>
+            <h2 className='text-white text-lg mb-2'>No hay reportes cuantitativos disponibles</h2>
+            <p className='text-cyan-200'>Esta actividad aún no tiene reportes cuantitativos creados.</p>
+          </div>
         )}
 
-        {/* Nuevo reporte */}
-        <h2 className='text-white text-lg mb-4'>Agregar Nuevo Reporte</h2>
-        <form className='flex flex-col gap-4 w-3/4 max-w-md mb-6' onSubmit={handleCreateSubmit}>
-          <label className='grid text-cyan-50 mb-4'>
-            <p className='text-cyan-50'>Logrado:</p>
-            <input type='number' name='achieved' min='0' required className='px-2 py-1 mt-2 rounded-md bg-cyan-700' />
-          </label>
-          <label className='grid text-cyan-50 mb-4'>
-            <p className='text-cyan-50'>Día:</p>
-            <input type='date' name='day' required className='px-2 py-1 mt-2 rounded-md bg-cyan-700' />
-          </label>
+        <h2 className='text-white text-lg mb-4'>Agregar nuevo reporte cuantitativo</h2>
+        <form className='flex flex-col w-4/5 text-sm' onSubmit={handleCreateSubmit}>
+          <div className='flex gap-2'>
+            <label className='grid text-cyan-50 mb-4'>
+              <p className='text-cyan-50'>Logrado:</p>
+              <input type='number' name='achieved' min='0' required className='px-2 py-1 mt-2 rounded-md bg-cyan-700 w-[100px]' />
+            </label>
+            <label className='grid text-cyan-50 mb-4'>
+              <p className='text-cyan-50'>Día:</p>
+              <input type='date' name='day' required className='px-2 py-1 mt-2 rounded-md bg-cyan-700 w-[100px]' />
+            </label>
+          </div>
           <div className='bg-cyan-800 p-4 rounded-lg mb-4'>
             <h4 className='text-cyan-100 text-md mb-3'>Población por Género</h4>
-            <div className='grid grid-cols-2 gap-3'>
+            <div className='grid grid-cols-5 gap-2'>
               <label className='grid text-cyan-50'>
                 <p className='text-cyan-50 text-sm'>SP Mujeres:</p>
-                <input type='number' name='spFemale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+                <input type='number' name='spFemale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 w-[100px]' />
               </label>
               <label className='grid text-cyan-50'>
                 <p className='text-cyan-50 text-sm'>SP Hombres:</p>
-                <input type='number' name='spMale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+                <input type='number' name='spMale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 w-[100px]' />
               </label>
               <label className='grid text-cyan-50'>
                 <p className='text-cyan-50 text-sm'>F Mujeres:</p>
-                <input type='number' name='fFemale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+                <input type='number' name='fFemale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 w-[100px]' />
               </label>
               <label className='grid text-cyan-50'>
                 <p className='text-cyan-50 text-sm'>F Hombres:</p>
-                <input type='number' name='fMale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+                <input type='number' name='fMale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 w-[100px]' />
               </label>
               <label className='grid text-cyan-50'>
                 <p className='text-cyan-50 text-sm'>NA Mujeres:</p>
-                <input type='number' name='naFemale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+                <input type='number' name='naFemale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 w-[100px]' />
               </label>
               <label className='grid text-cyan-50'>
                 <p className='text-cyan-50 text-sm'>NA Hombres:</p>
-                <input type='number' name='naMale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+                <input type='number' name='naMale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 w-[100px]' />
               </label>
               <label className='grid text-cyan-50'>
                 <p className='text-cyan-50 text-sm'>P Mujeres:</p>
-                <input type='number' name='pFemale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+                <input type='number' name='pFemale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 w-[100px]' />
               </label>
               <label className='grid text-cyan-50'>
                 <p className='text-cyan-50 text-sm'>P Hombres:</p>
-                <input type='number' name='pMale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700' />
+                <input type='number' name='pMale' min='0' defaultValue='0' className='px-2 py-1 mt-1 rounded-md bg-cyan-700 w-[100px]' />
               </label>
             </div>
           </div>
           <button type='submit' className='mt-4 px-4 py-2 rounded-md bg-cyan-600 hover:bg-cyan-500 text-white'>
-            Crear nuevo
+            Agregar
           </button>
         </form>
-
-        <a href='/reports/history' className='mt-4 text-cyan-200 hover:text-white'>Finalizar</a>
+        <a href='/reports/history' className='mt-6 text-cyan-200 hover:text-white'>Finalizar</a>
       </section>
     </main>
   )

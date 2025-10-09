@@ -77,11 +77,11 @@ const UpdateProject = () => {
           </label>
           <label className='grid text-cyan-50 mb-4'>
             <p className='text-cyan-50'>Objetivo del proyecto:</p>
-            <input
-              type='text'
+            <textarea
               name='objetiveProject'
               defaultValue={project.data?.read_project?.objetive_project || ''}
-              className='px-2 py-1 mt-2 rounded-md bg-cyan-700'
+              className='px-2 py-1 mt-2 rounded-md bg-cyan-700 resize-vertical'
+              rows={3}
             />
           </label>
           <label className='grid text-cyan-50 mb-4'>
@@ -98,11 +98,9 @@ const UpdateProject = () => {
           <button type='submit' className='mt-4 px-4 py-2 rounded-md bg-cyan-600 hover:bg-cyan-500 text-white'>Actualizar proyecto</button>
         </form>
         <section className='mt-4 w-3/4'>
-          <div className='bg-cyan-800 p-3 rounded-md'>
-            <p className='text-cyan-50'>{JSON.stringify(newProject !== null ? newProject.update_project : 'No se ha actualizado el proyecto aún')}</p>
-          </div>
+          <p>{newProject ? 'El proyecto se ha actualizado con éxito' : 'Aún no se ha actualizado el proyecto'}</p>
+          <a href={`/especifics/update/${idProject}`} className='mt-4 text-cyan-200 hover:text-white' style={{ display: newProject ? 'block' : 'none' }}>Continúa en el paso 2</a>
         </section>
-        <a href={`/especifics/update/${idProject}`} className='mt-4 text-cyan-200 hover:text-white'>Continúa en el paso 2</a>
       </section>
     </main>
   )

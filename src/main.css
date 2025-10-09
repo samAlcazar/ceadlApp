@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-input {
+input, textarea, select {
   appearance: none;
   outline: none;
 }
@@ -12,15 +12,8 @@ select::picker(select) {
   appearance: none;
 }
 
-select {
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  font-size: 16px;
-}
-
 select option {
-  background-color: tomato;
+  background-color: white;
   color: #333;
   padding: 5px;
 }

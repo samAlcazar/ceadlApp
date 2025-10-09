@@ -42,6 +42,8 @@ import CreateBudget from '../pages/applications/create/CreateBudget'
 import UpdateBudget from '../pages/applications/update/UpdateBudget'
 import HistoryApplications from '../pages/applications/HistoryApplications'
 import Application from '../pages/applications/Application'
+import HistoryActivities from '../pages/activity/HistoryActivities'
+import Activity from '../pages/activity/Activity'
 
 const Router = () => {
   return (
@@ -53,6 +55,8 @@ const Router = () => {
         <Route path='activities'>
           <Route path='create' element={<CreateActivity />} />
           <Route path='update/:idActivity' element={<UpdateActivity />} />
+          <Route path='history' element={<HistoryActivities />} />
+          <Route path=':idActivity' element={<Activity />} />
         </Route>
 
         {/* Rutas de Proyectos */}
@@ -96,7 +100,7 @@ const Router = () => {
         </Route>
         <Route path='surrenders'>
           <Route path='create/:idAccountability' element={<CreateSurrender />} />
-          <Route path='update/:idSurrender' element={<UpdateSurrender />} />
+          <Route path='update/:idAccountability' element={<UpdateSurrender />} />
         </Route>
 
         {/* Rutas de Solicitudes */}

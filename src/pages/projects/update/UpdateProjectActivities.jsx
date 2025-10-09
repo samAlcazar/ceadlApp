@@ -101,14 +101,14 @@ const UpdateProjectActivities = () => {
 
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
-      <section className='flex flex-col justify-center items-center w-[900px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700 overflow-y-auto'>
+      <section className='flex flex-col justify-center items-center w-[1000px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700 overflow-y-auto'>
         <h1 className='text-white text-2xl mb-8'>Actualizar Actividades del Proyecto</h1>
         {/* Verificamos que los datos existan y tengan la estructura correcta */}
         {projectActivities.data && projectActivities.data[0] && projectActivities.data[0].list_project_activities_by_project && (
-          <div className='w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 mb-6'>
+          <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 mb-6 text-sm'>
             {projectActivities.data[0].list_project_activities_by_project.map((activity) => (
               <form onSubmit={handleSubmit} key={activity.id_project_activity} className='bg-cyan-800 p-4 rounded-lg flex flex-col gap-3'>
-                <h3 className='text-cyan-50 text-lg font-semibold'>Actividad #{activity.num_project_activity}</h3>
+                <h3 className='text-cyan-50 text-sm font-semibold'>Actividad #{activity.num_project_activity}</h3>
                 <label className='hidden'>
                   <input
                     type='text'
@@ -168,7 +168,7 @@ const UpdateProjectActivities = () => {
         )}
 
         <h2 className='text-white text-lg mb-4'>Agregar nueva actividad</h2>
-        <form onSubmit={handleAddSubmit} className='flex flex-col gap-4 w-3/4 max-w-md'>
+        <form onSubmit={handleAddSubmit} className='flex flex-col w-3/4 max-w-md text-sm'>
           <label className='grid text-cyan-50 mb-4'>
             <p className='text-cyan-50'>Número de actividad:</p>
             <input type='number' name='numProjectActivity' min='1' max='10' required className='px-2 py-1 mt-2 rounded-md bg-cyan-700' />
@@ -184,7 +184,7 @@ const UpdateProjectActivities = () => {
           <button type='submit' className='mt-4 px-4 py-2 rounded-md bg-cyan-600 hover:bg-cyan-500 text-white'>Agregar</button>
         </form>
 
-        <a href={`/projects/${idProject}`} className='mt-6 text-cyan-200 hover:text-white'>Ver proyecto completo</a>
+        <a href='/projects/history' className='mt-6 text-cyan-200 hover:text-white'>Finalizar</a>
       </section>
     </main>
   )

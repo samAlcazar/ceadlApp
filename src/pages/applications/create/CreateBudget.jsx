@@ -40,6 +40,10 @@ const CreateBudget = () => {
     form.reset()
   }
 
+  const removeBudget = (index) => {
+    setBudgets(budgets.filter((_, i) => i !== index))
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -61,74 +65,145 @@ const CreateBudget = () => {
   }
 
   return (
-    <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
-      <h1>Crear Presupuesto</h1>
+    <main className='w-screen h-screen flex flex-col items-center bg-gray-100'>
+      <section className='flex flex-col items-center w-[1000px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700 overflow-y-auto px-6 pt-20 pb-8'>
+        <h1 className='text-white text-2xl mb-8'>Crear Presupuesto</h1>
 
-      <form className='flex flex-col gap-4'>
-        <label>
-          Cantidad:
-          <input type='number' name='quantity' min='1' required />
-        </label>
-        <label>
-          Código:
-          <input type='text' name='code' required />
-        </label>
+        <form className='grid grid-cols-2 gap-2 w-4/5 bg-cyan-800 p-6 rounded-lg text-sm'>
+          <div className=''>
+            <label className='grid text-cyan-50 mb-4'>
+              <p className='text-cyan-50 mb-2'>Cantidad:</p>
+              <input
+                type='number'
+                name='quantity'
+                min='1'
+                required
+                className='px-2 py-1 rounded-md bg-cyan-700 text-white placeholder-cyan-300'
+              />
+            </label>
 
-        <label>
-          Descripción:
-          <input type='text' name='description' required />
-        </label>
+            <label className='grid text-cyan-50 mb-4'>
+              <p className='text-cyan-50 mb-2'>Código:</p>
+              <input
+                type='text'
+                name='code'
+                required
+                className='px-2 py-1 rounded-md bg-cyan-700 text-white placeholder-cyan-300'
+              />
+            </label>
 
-        <label>
-          Importe USD:
-          <input type='number' name='importUSD' step='0.01' min='0' required />
-        </label>
-
-        <label>
-          Importe BOB:
-          <input type='number' name='importBOB' step='0.01' min='0' required />
-        </label>
-
-        <label>
-          Financiador:
-          <select name='idFounder'>
-            <option value=''>Seleccionar financiador</option>
-            {founders.data && founders.data[0]
-              ? founders.data.map((founder) => (
-                <option key={founder.id_founder} value={founder.id_founder}>
-                  {founder.name_founder}
-                </option>
-              ))
-              : null}
-          </select>
-        </label>
-
-        <button type='button' onClick={pushBudget}>Agregar Presupuesto</button>
-      </form>
-
-      <section>
-        <h2>Presupuestos Agregados</h2>
-        {budgets.map((budget, index) => (
-          <div key={index}>
-            <p>Cantidad: {budget.quantity}</p>
-            <p>Código: {budget.code}</p>
-            <p>Descripción: {budget.description}</p>
-            <p>USD: ${budget.importUSD}</p>
-            <p>BOB: Bs {budget.importBOB}</p>
-            <p>Financiador ID: {budget.idFounder}</p>
+            <label className='grid text-cyan-50 mb-4'>
+              <p className='text-cyan-50 mb-2'>Descripción:</p>
+              <input
+                type='text'
+                name='description'
+                required
+                className='px-2 py-1 rounded-md bg-cyan-700 text-white placeholder-cyan-300'
+              />
+            </label>
           </div>
-        ))}
-      </section>
+          <div className=''>
+            <label className='grid text-cyan-50 mb-4'>
+              <p className='text-cyan-50 mb-2'>Importe USD:</p>
+              <input
+                type='number'
+                name='importUSD'
+                step='0.01'
+                min='0'
+                required
+                className='px-2 py-1 rounded-md bg-cyan-700 text-white placeholder-cyan-300'
+              />
+            </label>
 
-      <button onClick={handleSubmit}>Subir Todos los Presupuestos</button>
+            <label className='grid text-cyan-50 mb-4'>
+              <p className='text-cyan-50 mb-2'>Importe BOB:</p>
+              <input
+                type='number'
+                name='importBOB'
+                step='0.01'
+                min='0'
+                required
+                className='px-2 py-1 rounded-md bg-cyan-700 text-white placeholder-cyan-300'
+              />
+            </label>
+            <label className='grid text-cyan-50 mb-4'>
+              <p className='text-cyan-50 mb-2'>Financiador:</p>
+              <select name='idFounder' className='px-2 py-1 rounded-md bg-cyan-700 text-white'>
+                <option value=''>Seleccionar financiador</option>
+                {founders.data && founders.data[0]
+                  ? founders.data.map((founder) => (
+                    <option key={founder.id_founder} value={founder.id_founder}>
+                      {founder.name_founder}
+                    </option>
+                  ))
+                  : null}
+              </select>
+            </label>
+          </div>
 
-      <section>
-        <h2>Presupuestos Subidos</h2>
-        <p>{JSON.stringify(allBudgets)}</p>
+          <button
+            type='button'
+            onClick={pushBudget}
+            className='mt-4 px-4 py-2 rounded-md bg-cyan-600 hover:bg-cyan-500 text-white col-span-2'
+          >
+            Agregar Presupuesto
+          </button>
+        </form>
+
+        {budgets.length > 0 && (
+          <section className='mt-6 w-4/5'>
+            <h2 className='text-white text-lg mb-4'>Presupuestos Agregados</h2>
+            <div className='space-y-3 grid grid-cols-2 gap-4'>
+              {budgets.map((budget, index) => {
+                // Buscar el nombre del financiador basándose en el ID
+                const founderName = (founders.data && founders.data.find(
+                  founder => founder.id_founder.toString() === budget.idFounder.toString()
+                )?.name_founder) || 'Financiador no encontrado'
+
+                return (
+                  <div key={index} className='bg-cyan-800 p-4 rounded-lg'>
+                    <div className='text-cyan-50 space-y-1 grid grid-cols-2 gap-4'>
+                      <div>
+                        <p><span className='font-semibold'>Cantidad:</span> {budget.quantity}</p>
+                        <p><span className='font-semibold'>Código:</span> {budget.code}</p>
+                        <p><span className='font-semibold'>Descripción:</span> {budget.description}</p>
+                      </div>
+                      <div>
+                        <p><span className='font-semibold'>USD:</span> ${budget.importUSD}</p>
+                        <p><span className='font-semibold'>BOB:</span> Bs {budget.importBOB}</p>
+                        <p><span className='font-semibold'>Financiador:</span> {founderName}</p>
+                      </div>
+                    </div>
+                    <button
+                      type='button'
+                      onClick={() => removeBudget(index)}
+                      className='mt-4 px-4 py-2 rounded-md bg-red-600 hover:bg-red-500 text-white'
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                )
+              })}
+            </div>
+          </section>
+        )}
+
+        {budgets.length > 0 && (
+          <button
+            onClick={handleSubmit}
+            className='mt-6 px-6 py-3 rounded-md bg-green-600 hover:bg-green-500 text-white font-semibold'
+          >
+            Subir Todos los Presupuestos
+          </button>
+        )}
+
+        {allBudgets.length > 0 && (
+          <section className='mt-6 w-full max-w-md'>
+            <h2 className='text-white text-lg mb-4'>Presupuestos Subidos</h2>
+            <a href='/applications/history' className='text-cyan-50 underline '>Finalizar</a>
+          </section>
+        )}
       </section>
-      <a href='/applications/history'>
-        Finalizar
-      </a>
     </main>
   )
 }

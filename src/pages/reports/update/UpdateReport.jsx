@@ -2,10 +2,12 @@ import Data from '../../../hooks/Data'
 import Authorized from '../../../hooks/Authorized'
 import { useParams } from 'react-router-dom'
 import { URL } from '../../../../utils/url'
+import { useState } from 'react'
 
 const UpdateReport = () => {
   const user = Authorized()
   const { idReport } = useParams()
+  const [reportData, setReportData] = useState(null)
 
   const reportLink = idReport ? `reports/${idReport}` : null
   const report = Data(reportLink)
@@ -58,7 +60,7 @@ const UpdateReport = () => {
       })
       .then(data => {
         console.log('Reporte actualizado:', data)
-        window.location.reload() // Recarga la página para ver los cambios
+        setReportData(data) // Recarga la página para ver los cambios
       })
       .catch(error => {
         console.error('Error:', error)
@@ -101,10 +103,10 @@ const UpdateReport = () => {
 
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
-      <section className='flex flex-col justify-center items-center w-[600px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700 overflow-y-auto'>
+      <section className='flex flex-col justify-center items-center w-[900px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700 overflow-y-auto'>
         <h1 className='text-white text-2xl mb-8'>Actualizar Reporte</h1>
 
-        <form onSubmit={handleSubmit} className='flex flex-col gap-4 w-3/4 py-4'>
+        <form onSubmit={handleSubmit} className='grid grid-cols-2 gap-4 w-4/5 py-4'>
           <label className='grid text-cyan-50 mb-4'>
             <p className='text-cyan-50'>Temas tratados:</p>
             <textarea
@@ -190,11 +192,10 @@ const UpdateReport = () => {
           <button type='submit' className='mt-4 px-4 py-2 rounded-md bg-cyan-600 hover:bg-cyan-500 text-white'>Actualizar Reporte</button>
         </form>
 
-        {report.data && (
-          <a href={`/quantitative/update/${report.data.read_report?.id_activity || 'default'}`} className='mt-4 text-cyan-200 hover:text-white'>
-            Continuar al paso 2
-          </a>
-        )}
+        <section className='mt-4 w-3/4'>
+          <p className='text-center text-cyan-50'>{reportData ? 'El reporte se ha actualizado con éxito' : 'Aún no se ha actualizado el reporte'}</p>
+          <a href={`/quantitative/update/${report.data?.read_report?.id_activity}`} className='mt-4 text-cyan-200 hover:text-white' style={{ display: reportData !== null ? 'block' : 'none' }}>Continúa en el paso 2</a>
+        </section>
       </section>
     </main>
   )
