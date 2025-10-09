@@ -50,9 +50,11 @@ const Home = () => {
         <Card
           title='Participantes'
           linkOne='participants/create'
-          linkTwo='participants/history'
+          linkTwo='participants/list'
+          linkThree='participants/statistics'
           aOne='Crear participantes'
-          aTwo='Historial de participantes'
+          aTwo='Listas de participantes'
+          aThree='Estadísticas de participantes'
         />
       </section>
     </main>

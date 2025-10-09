@@ -1,7 +1,7 @@
 import Data from '../../hooks/Data'
 import { useState, useMemo, useCallback } from 'react'
 
-const ListParticipants = () => {
+const Estadistics = () => {
   const participants = Data('participants')
   const activities = Data('activities')
   const projects = Data('projects')
@@ -88,10 +88,61 @@ const ListParticipants = () => {
     })
   }
 
+  // Calcular estadísticas de los datos filtrados
+  const statistics = useMemo(() => {
+    const total = filteredData.length
+    // Estadísticas por género
+    const byGender = filteredData.reduce((acc, item) => {
+      const gender = item.gender || 'No especificado'
+      acc[gender] = (acc[gender] || 0) + 1
+      return acc
+    }, {})
+
+    // Estadísticas por tipo de participante
+    const byType = filteredData.reduce((acc, item) => {
+      const type = item.type_participant || 'No especificado'
+      acc[type] = (acc[type] || 0) + 1
+      return acc
+    }, {})
+
+    // Estadísticas por municipio
+    const byMunicipality = filteredData.reduce((acc, item) => {
+      const municipality = item.municipality || 'No especificado'
+      acc[municipality] = (acc[municipality] || 0) + 1
+      return acc
+    }, {})
+
+    // Estadísticas por proyecto
+    const byProject = filteredData.reduce((acc, item) => {
+      const project = getProjectName(item.id_project)
+      acc[project] = (acc[project] || 0) + 1
+      return acc
+    }, {})
+
+    // Rango de edades
+    const ages = filteredData.filter(item => item.age).map(item => parseInt(item.age))
+    const ageStats = ages.length > 0
+      ? {
+          min: Math.min(...ages),
+          max: Math.max(...ages),
+          avg: Math.round(ages.reduce((sum, age) => sum + age, 0) / ages.length)
+        }
+      : null
+
+    return {
+      total,
+      byGender,
+      byType,
+      byMunicipality,
+      byProject,
+      ageStats
+    }
+  }, [filteredData, getProjectName])
+
   return (
     <main className='w-screen h-screen flex flex-col justify-center items-center bg-gray-100'>
       <section className='flex flex-col justify-center items-center w-[1200px] h-full bg-gradient-to-t from-cyan-900 to-cyan-700 overflow-y-auto px-6 py-8'>
-        <h1 className='text-white text-2xl mb-8'>Listado de Participantes</h1>
+        <h1 className='text-white text-2xl mb-8'>Estadísticas de Participantes</h1>
         {/* Sección de Filtros */}
         <div className='w-full bg-cyan-800 rounded-lg p-6 mb-6'>
           <div className='flex justify-between items-center mb-4'>
@@ -221,82 +272,134 @@ const ListParticipants = () => {
           </div>
         </div>
 
-        {/* Resumen de resultados */}
-        <div className='w-full bg-cyan-800 rounded-lg p-4 mb-6'>
-          <div className='flex justify-between items-center'>
-            <span className='text-white text-lg'>
-              Mostrando {filteredData.length} de {listData.length} participantes
-            </span>
-            {filteredData.length !== listData.length && (
-              <span className='text-cyan-200 text-sm'>
-                (Filtros aplicados)
-              </span>
+        {/* Sección de Estadísticas Principales */}
+        <div className='w-full bg-cyan-800 rounded-lg p-6 mb-6'>
+          <h2 className='text-white text-lg mb-4'>Estadísticas Generales</h2>
+          {/* Panel Principal de Estadísticas */}
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4'>
+            {/* Total de participantes */}
+            <div className='bg-cyan-700 rounded-lg p-4 text-center'>
+              <h3 className='text-cyan-100 text-sm font-medium mb-2'>Total de Participantes</h3>
+              <p className='text-white text-3xl font-bold'>{statistics.total}</p>
+              <p className='text-cyan-200 text-xs mt-1'>de {listData.length} totales</p>
+            </div>
+
+            {/* Estadísticas por género */}
+            <div className='bg-cyan-700 rounded-lg p-4'>
+              <h3 className='text-cyan-100 text-sm font-medium mb-3 text-center'>Distribución por Género</h3>
+              <div className='space-y-2'>
+                {Object.entries(statistics.byGender).map(([gender, count]) => (
+                  <div key={gender} className='flex justify-between items-center'>
+                    <span className='text-cyan-200 text-sm'>
+                      {gender === 'Male' ? 'Masculino' : gender === 'Female' ? 'Femenino' : gender === 'Other' ? 'Otro' : gender}
+                    </span>
+                    <div className='flex items-center'>
+                      <span className='text-white font-medium mr-2'>{count}</span>
+                      <span className='text-cyan-300 text-xs'>
+                        ({statistics.total > 0 ? Math.round((count / statistics.total) * 100) : 0}%)
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Estadísticas de edad */}
+            {statistics.ageStats && (
+              <div className='bg-cyan-700 rounded-lg p-4'>
+                <h3 className='text-cyan-100 text-sm font-medium mb-3 text-center'>Estadísticas de Edad</h3>
+                <div className='space-y-2'>
+                  <div className='flex justify-between'>
+                    <span className='text-cyan-200 text-sm'>Promedio:</span>
+                    <span className='text-white font-medium'>{statistics.ageStats.avg} años</span>
+                  </div>
+                  <div className='flex justify-between'>
+                    <span className='text-cyan-200 text-sm'>Mínima:</span>
+                    <span className='text-white font-medium'>{statistics.ageStats.min} años</span>
+                  </div>
+                  <div className='flex justify-between'>
+                    <span className='text-cyan-200 text-sm'>Máxima:</span>
+                    <span className='text-white font-medium'>{statistics.ageStats.max} años</span>
+                  </div>
+                </div>
+              </div>
             )}
+
+            {/* Estadísticas por tipo */}
+            <div className='bg-cyan-700 rounded-lg p-4'>
+              <h3 className='text-cyan-100 text-sm font-medium mb-3 text-center'>Por Tipo de Participante</h3>
+              <div className='space-y-2'>
+                {Object.entries(statistics.byType).map(([type, count]) => (
+                  <div key={type} className='flex justify-between items-center'>
+                    <span className='text-cyan-200 text-sm'>{type}:</span>
+                    <div className='flex items-center'>
+                      <span className='text-white font-medium mr-2'>{count}</span>
+                      <span className='text-cyan-300 text-xs'>
+                        ({statistics.total > 0 ? Math.round((count / statistics.total) * 100) : 0}%)
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Sección de Tabla de Datos */}
-        <div className='w-full bg-cyan-800 rounded-lg p-6 overflow-x-auto'>
-          <table className='w-full text-white'>
-            <thead>
-              <tr className='border-b border-cyan-600'>
-                <th className='text-left py-3 px-4 text-cyan-100'>Nro</th>
-                <th className='text-left py-3 px-4 text-cyan-100'>Nombre</th>
-                <th className='text-left py-3 px-4 text-cyan-100'>Género</th>
-                <th className='text-left py-3 px-4 text-cyan-100'>Edad</th>
-                <th className='text-left py-3 px-4 text-cyan-100'>Organización</th>
-                <th className='text-left py-3 px-4 text-cyan-100'>Tipo</th>
-                <th className='text-left py-3 px-4 text-cyan-100'>Municipio</th>
-                <th className='text-left py-3 px-4 text-cyan-100'>Proyecto</th>
-                <th className='text-left py-3 px-4 text-cyan-100'>Actividad</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                filteredData.map((item, index) => (
-                  <tr key={item.id_participant} className='border-b border-cyan-700 hover:bg-cyan-700 transition-colors'>
-                    <td className='py-3 px-4'>{index + 1}</td>
-                    <td className='py-3 px-4 font-medium'>{item.name_participant || 'N/A'}</td>
-                    <td className='py-3 px-4'>
-                      <span className={`px-2 py-1 rounded-full text-xs ${
-                        item.gender === 'Male'
-                          ? 'bg-blue-600 text-blue-100'
-                          : item.gender === 'Female'
-                            ? 'bg-pink-600 text-pink-100'
-                            : 'bg-purple-600 text-purple-100'
-                      }`}
-                      >
-                        {item.gender === 'Male' ? 'M' : item.gender === 'Female' ? 'F' : 'O'}
-                      </span>
-                    </td>
-                    <td className='py-3 px-4'>{item.age || 'N/A'}</td>
-                    <td className='py-3 px-4'>{item.organization || 'N/A'}</td>
-                    <td className='py-3 px-4'>
-                      <span className={`px-2 py-1 rounded-full text-xs ${
-                        item.type_participant === 'Volunteer'
-                          ? 'bg-green-600 text-green-100'
-                          : item.type_participant === 'Beneficiary'
-                            ? 'bg-yellow-600 text-yellow-100'
-                            : item.type_participant === 'Staff'
-                              ? 'bg-indigo-600 text-indigo-100'
-                              : 'bg-orange-600 text-orange-100'
-                      }`}
-                      >
-                        {item.type_participant || 'N/A'}
-                      </span>
-                    </td>
-                    <td className='py-3 px-4'>{item.municipality || 'N/A'}</td>
-                    <td className='py-3 px-4'>{getProjectName(item.id_project)}</td>
-                    <td className='py-3 px-4'>{getActivityName(item.id_activity)}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-        </div>
+        {/* Estadísticas Detalladas */}
+        {(Object.keys(statistics.byMunicipality).length > 0 || Object.keys(statistics.byProject).length > 0) && (
+          <div className='w-full bg-cyan-800 rounded-lg p-6'>
+            <h2 className='text-white text-lg mb-4'>Estadísticas Detalladas</h2>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+              {/* Por municipios */}
+              {Object.keys(statistics.byMunicipality).length > 0 && (
+                <div className='bg-cyan-700 rounded-lg p-4'>
+                  <h3 className='text-cyan-100 text-sm font-medium mb-3'>Distribución por Municipio</h3>
+                  <div className='space-y-2 max-h-60 overflow-y-auto'>
+                    {Object.entries(statistics.byMunicipality)
+                      .sort(([, a], [, b]) => b - a)
+                      .map(([municipality, count]) => (
+                        <div key={municipality} className='flex justify-between items-center py-1'>
+                          <span className='text-cyan-200 text-sm'>{municipality}</span>
+                          <div className='flex items-center'>
+                            <span className='text-white font-medium mr-2'>{count}</span>
+                            <span className='text-cyan-300 text-xs'>
+                              ({statistics.total > 0 ? Math.round((count / statistics.total) * 100) : 0}%)
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Por proyectos */}
+              {Object.keys(statistics.byProject).length > 0 && (
+                <div className='bg-cyan-700 rounded-lg p-4'>
+                  <h3 className='text-cyan-100 text-sm font-medium mb-3'>Distribución por Proyecto</h3>
+                  <div className='space-y-2 max-h-60 overflow-y-auto'>
+                    {Object.entries(statistics.byProject)
+                      .sort(([, a], [, b]) => b - a)
+                      .filter(([project]) => project !== 'Proyecto no encontrado')
+                      .map(([project, count]) => (
+                        <div key={project} className='flex justify-between items-center py-1'>
+                          <span className='text-cyan-200 text-sm truncate mr-2'>{project}</span>
+                          <div className='flex items-center'>
+                            <span className='text-white font-medium mr-2'>{count}</span>
+                            <span className='text-cyan-300 text-xs'>
+                              ({statistics.total > 0 ? Math.round((count / statistics.total) * 100) : 0}%)
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </section>
     </main>
   )
 }
 
-export default ListParticipants
+export default Estadistics

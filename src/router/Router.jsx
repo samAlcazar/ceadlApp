@@ -44,6 +44,11 @@ import HistoryApplications from '../pages/applications/HistoryApplications'
 import Application from '../pages/applications/Application'
 import HistoryActivities from '../pages/activity/HistoryActivities'
 import Activity from '../pages/activity/Activity'
+import CreateParticipants from '../pages/participants/CreateParticipants'
+import ListParticipants from '../pages/participants/ListParticipants'
+import UpdateParticipants from '../pages/participants/UpdateParticipants'
+import Estadistics from '../pages/participants/Estadistics'
+import Print from '../pages/Print'
 
 const Router = () => {
   return (
@@ -56,7 +61,6 @@ const Router = () => {
           <Route path='create' element={<CreateActivity />} />
           <Route path='update/:idActivity' element={<UpdateActivity />} />
           <Route path='history' element={<HistoryActivities />} />
-          <Route path=':idActivity' element={<Activity />} />
         </Route>
 
         {/* Rutas de Proyectos */}
@@ -64,7 +68,6 @@ const Router = () => {
           <Route path='create' element={<CreateProject />} />
           <Route path='update/:idProject' element={<UpdateProject />} />
           <Route path='history' element={<HistoryProjects />} />
-          <Route path=':idProject' element={<Project />} />
         </Route>
         <Route path='especifics'>
           <Route path='create/:idProject' element={<CreateEspecifics />} />
@@ -84,7 +87,6 @@ const Router = () => {
           <Route path='create' element={<CreateReport />} />
           <Route path='update/:idReport' element={<UpdateReport />} />
           <Route path='history' element={<HistoryReports />} />
-          <Route path=':idReport' element={<Report />} />
         </Route>
         <Route path='quantitative'>
           <Route path='create/:idActivity' element={<CreateQuantitative />} />
@@ -96,7 +98,6 @@ const Router = () => {
           <Route path='create' element={<CreateAccountability />} />
           <Route path='update/:idAccountability' element={<UpdateAccountability />} />
           <Route path='history' element={<HistoryAccountability />} />
-          <Route path=':idAccountability' element={<Accountability />} />
         </Route>
         <Route path='surrenders'>
           <Route path='create/:idAccountability' element={<CreateSurrender />} />
@@ -108,12 +109,27 @@ const Router = () => {
           <Route path='create' element={<CreateApplication />} />
           <Route path='update/:idApplication' element={<UpdateApplication />} />
           <Route path='history' element={<HistoryApplications />} />
-          <Route path=':idApplication' element={<Application />} />
         </Route>
         <Route path='budgets'>
           <Route path='create/:idApplication' element={<CreateBudget />} />
           <Route path='update/:idApplication' element={<UpdateBudget />} />
         </Route>
+
+        {/* Rutas de Participantes */}
+        <Route path='participants'>
+          <Route path='create' element={<CreateParticipants />} />
+          <Route path='list' element={<ListParticipants />} />
+          <Route path='update/:idParticipant' element={<UpdateParticipants />} />
+          <Route path='statistics' element={<Estadistics />} />
+        </Route>
+      </Route>
+
+      <Route path='print' element={<Print />}>
+        <Route path=':idProject' element={<Project />} />
+        <Route path=':idActivity' element={<Activity />} />
+        <Route path=':idReport' element={<Report />} />
+        <Route path=':idAccountability' element={<Accountability />} />
+        <Route path=':idApplication' element={<Application />} />
       </Route>
 
       <Route path='/login' element={<Login />} />
